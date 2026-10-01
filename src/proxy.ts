@@ -16,7 +16,8 @@ export async function proxy(request: NextRequest) {
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if (!url || !key) {
+  // Unset, or still a "REPLACE_WITH_…" placeholder from cloudflare.config.ts.
+  if (!url || !key || url.includes("REPLACE_WITH") || key.includes("REPLACE_WITH")) {
     // Not configured yet: the login page explains what to set up.
     if (isAdminArea && !isLogin) return NextResponse.redirect(new URL("/admin/login", request.url));
     return NextResponse.next({ request });

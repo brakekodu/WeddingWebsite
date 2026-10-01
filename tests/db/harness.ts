@@ -11,7 +11,7 @@ import path from "node:path";
 import { PGlite, type Transaction } from "@electric-sql/pglite";
 import { pgcrypto } from "@electric-sql/pglite/contrib/pgcrypto";
 
-const MIGRATIONS_DIR = path.resolve(__dirname, "../../supabase/migrations");
+const MIGRATIONS_DIR = path.resolve(import.meta.dirname, "../../supabase/migrations");
 
 const SUPABASE_STUB = `
   create role anon nologin noinherit;

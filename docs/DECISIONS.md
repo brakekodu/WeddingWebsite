@@ -58,11 +58,17 @@ Allergies don't change between dinners, so `guests.dietary_restrictions` is the
 single place for them (guest-editable via RSVP). `meal_selections` holds the
 meal choice per (guest, event) with FK guarantees that the meal belongs to the event.
 
-### D10 — Hosting deferred; Vercel recommended
+### D10 — Hosting: Cloudflare Workers via vinext, deployed from GitHub
 
-Not needed until the deployment phase. Vercel is the lowest-friction Next.js
-host; Cloudflare (OpenNext) is a viable alternative given the domain and R2.
-Code avoids host-specific APIs.
+Mirrors the couple's other site: one Cloudflare account holds the domain, DNS,
+hosting, and R2; Cloudflare builds from GitHub on every push to `main`.
+Cloudflare's recommended path for Next.js is vinext (the Next.js API on Vite),
+which ran this app unchanged (`vinext check`: no app-code issues; full guest
+RSVP flow verified in the Workers runtime). Supabase stays as the database and
+admin login — already built and tested; moving to D1/Access would be a rewrite.
+Worker config, custom domains, and non-secret settings live in
+`cloudflare.config.ts`; no secrets on the Worker. No CDN caching: every page is
+personalized or admin. `next` stays installed only for `next typegen` types.
 
 ### D11 — Database tests on PGlite
 
@@ -97,3 +103,9 @@ acceptable because QR links are unaffected. Edge rate limiting can be added late
 
 Generated types become precise unions. Adding a value is a simple migration;
 removing one is rare.
+
+### D17 — Production domain kevinandsarina.com
+
+Apex is canonical: `APP_BASE_URL=https://kevinandsarina.com` (shorter QR).
+`www` is attached too so typed URLs work. Tokens never embed the domain.
+Auto-renew must stay on — a lapsed domain breaks every printed QR code.

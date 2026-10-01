@@ -7,7 +7,6 @@ import { RsvpExperience } from "./rsvp-experience";
 export const metadata: Metadata = {
   title: "Your invitation",
   robots: { index: false, follow: false },
-  referrer: "no-referrer",
 };
 
 /**

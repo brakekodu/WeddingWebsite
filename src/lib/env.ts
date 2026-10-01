@@ -16,8 +16,13 @@ export class MissingEnvError extends Error {
   }
 }
 
+/** Unset, empty, or still a "REPLACE_WITH_…" placeholder from cloudflare.config.ts. */
+export function isUnset(value: string | undefined): value is undefined {
+  return !value || value.trim() === "" || value.includes("REPLACE_WITH");
+}
+
 function required(name: string, value: string | undefined, hint: string): string {
-  if (!value || value.trim() === "") throw new MissingEnvError(name, hint);
+  if (isUnset(value)) throw new MissingEnvError(name, hint);
   return value.trim();
 }
 
@@ -38,7 +43,7 @@ export function getSupabasePublicEnv(): { url: string; publishableKey: string } 
 }
 
 export function isSupabaseConfigured(): boolean {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY);
+  return !isUnset(process.env.NEXT_PUBLIC_SUPABASE_URL) && !isUnset(process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY);
 }
 
 /**

@@ -11,15 +11,16 @@ wedding-day mode, and gallery are later phases.
 
 ## Stack
 
-| Concern               | Choice                                                                    |
-| --------------------- | ------------------------------------------------------------------------- |
-| App                   | Next.js 16 (App Router) + React 19 + TypeScript                           |
-| Styling               | Tailwind CSS 4                                                            |
-| Database / auth       | Supabase (Postgres + Auth), Row Level Security on every table             |
-| Schema changes        | Version-controlled SQL in `supabase/migrations/` via the Supabase CLI     |
-| QR codes              | `qrcode` (generate) + `jsqr` (decode for validation) — pure JS            |
-| Media storage (later) | Cloudflare R2 bucket `brake-wedding`, presigned URLs via `aws4fetch`      |
-| Tests                 | Vitest; database/RLS tests run on PGlite (in-process Postgres, no Docker) |
+| Concern               | Choice                                                                                         |
+| --------------------- | ---------------------------------------------------------------------------------------------- |
+| App                   | Next.js 16 (App Router) + React 19 + TypeScript                                                |
+| Styling               | Tailwind CSS 4                                                                                 |
+| Database / auth       | Supabase (Postgres + Auth), Row Level Security on every table                                  |
+| Schema changes        | Version-controlled SQL in `supabase/migrations/` via the Supabase CLI                          |
+| QR codes              | `qrcode` (generate) + `jsqr` (decode for validation) — pure JS                                 |
+| Hosting               | Cloudflare Workers (via vinext), auto-deployed from GitHub `main`; domain `kevinandsarina.com` |
+| Media storage (later) | Cloudflare R2 bucket `brake-wedding`, presigned URLs via `aws4fetch`                           |
+| Tests                 | Vitest; database/RLS tests run on PGlite (in-process Postgres, no Docker)                      |
 
 Why these choices: [docs/DECISIONS.md](docs/DECISIONS.md).
 
@@ -65,8 +66,9 @@ Full detail, including where to find each value: [docs/DEPLOYMENT.md](docs/DEPLO
 
 | Command                                     | What it does                                                                            |
 | ------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `npm run dev`                               | Development server                                                                      |
-| `npm run build` / `npm start`               | Production build / serve it                                                             |
+| `npm run dev`                               | Development server (vinext/Vite, http://localhost:3000)                                 |
+| `npm run build` / `npm start`               | Build the Cloudflare Worker / run it locally in Cloudflare's runtime                    |
+| `npm run deploy`                            | Build + deploy to Cloudflare (runs automatically on every push to `main`)               |
 | `npm run typecheck`                         | Generate Next route types, then `tsc --noEmit`                                          |
 | `npm run lint`                              | ESLint                                                                                  |
 | `npm run format` / `format:check`           | Prettier write / check                                                                  |

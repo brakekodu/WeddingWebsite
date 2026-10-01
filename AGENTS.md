@@ -25,4 +25,5 @@ Read `README.md` and `docs/` first. Security invariants — do not break these:
 - Schema changes: new migration file (never edit a pushed one), update
   `src/lib/supabase/database.types.ts`, add tests in `tests/db/`.
 - Never hard-code events or meal names in application logic.
-- Run `npm run check` before committing.
+- The app runs on Cloudflare Workers via **vinext** (`vite.config.ts`, `cloudflare.config.ts`); `next` is kept only for `next typegen`. Run `npx vinext check` before adding Next.js features. Only non-secret values go in `cloudflare.config.ts`.
+- Run `npm run check` and `npm run build` before committing.

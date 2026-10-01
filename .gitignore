@@ -57,3 +57,6 @@ next-env.d.ts
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
+/dist/
+.vinext/
+.cloudflare/

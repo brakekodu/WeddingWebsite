@@ -105,6 +105,8 @@ Design rules (implemented in `src/lib/storage/r2.ts`):
 
 ## Hosting
 
-Not decided in Phase 1 (see DECISIONS.md D10). The code avoids host-specific
-APIs: QR generation/decoding and R2 presigning are pure JavaScript, and
-`APP_BASE_URL` is explicit configuration rather than derived from request headers.
+Cloudflare Workers, Worker `wedding-website`, built with vinext (the Next.js API on
+Vite) and deployed by Cloudflare from GitHub on every push to `main`. Custom
+domains `kevinandsarina.com` and `www.kevinandsarina.com` are declared in
+`cloudflare.config.ts`. Supabase remains the database and auth provider; the
+Worker calls it over HTTPS. See DEPLOYMENT.md and DECISIONS.md D10.
