@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin households</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.btn{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:40px;padding:0 16px;background:#6F5A8F;color:#fff;border:2px solid #6F5A8F;border-radius:8px;font:600 14px 'IBM Plex Sans',sans-serif;text-decoration:none}
+.btn:hover{color:#fff;background:#4F3E69}
+.btn2{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:40px;padding:0 14px;background:#fff;color:#2E2638;border:1.5px solid #8E7BAA;border-radius:8px;font:600 13px 'IBM Plex Sans',sans-serif;text-decoration:none;white-space:nowrap}
+.ann{background:#fff3e6;border:1px solid #c2410c;color:#7a2c0c;font:12px/1.5 'IBM Plex Mono',monospace;border-radius:4px;padding:10px 12px;box-sizing:border-box}
+.ni{min-height:40px;padding:0 12px;display:flex;align-items:center;border-radius:8px;font-size:14px;text-decoration:none;color:#2E2638}
+.ni.on{background:#6F5A8F;color:#fff;font-weight:600}
+.b{display:inline-flex;align-items:center;gap:4px;border:1px solid #8E7BAA;border-radius:999px;padding:1px 8px;font-size:12px;white-space:nowrap;background:#fff}
+.b.dk{background:#6F5A8F;color:#fff;border-color:#6F5A8F}
+.b.ds{border-style:dashed}
+.hh{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border-bottom:1px solid #EFE9F4;text-decoration:none}
+.hh.on{background:#EDE4F4;box-shadow:inset 3px 0 0 #6F5A8F}
+.pnl{border:1px solid #DCD2E6;border-radius:12px;background:#fff;padding:20px;display:flex;flex-direction:column;gap:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:center;font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5E5468;padding:0 8px 10px;border-bottom:1px solid #6F5A8F}
+th:first-child,td:first-child{text-align:left}
+td{padding:12px 8px;border-bottom:1px solid #EFE9F4;text-align:center}
+.cb{width:20px;height:20px}
+</style>
+</helmet>
+<div style="width: 1440px; min-height: 1160px; display: flex; flex-direction: column; background: #F1EAF6">
+<div style="background: #3B2F4A; color: #fff; padding: 12px 40px; display: flex; gap: 16px; align-items: center; font: 13px 'IBM Plex Mono', monospace"><span>/admin/households</span><span style="border: 1px solid #fff; background: #fff; color: #2E2638; border-radius: 999px; padding: 2px 10px">● Admin</span><span style="color: #DCD2E6">Households · list + detail · the guest × event grid is where invitations are really decided</span></div>
+<div style="display: flex; flex-grow: 1">
+<aside style="width: 232px; flex-shrink: 0; background: #fff; border-right: 1px solid #E4DBEC; padding: 24px 16px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box">
+<div class="sf" style="font-size: 20px; padding: 0 12px 2px">[Name] &amp; [Name]</div>
+<div style="font-size: 13px; color: #5E5468; padding: 0 12px 20px">[Date] · 123 days to go</div>
+<nav aria-label="Admin" style="display: flex; flex-direction: column; gap: 2px">
+<a class="ni" href="A-Dashboard.dc.html">Dashboard</a><a class="ni" href="A-Guests.dc.html">Guests</a><a class="ni on" href="A-Households.dc.html" aria-current="page">Households</a><a class="ni" href="A-Invitations.dc.html">Invitations</a><a class="ni" href="A-Events.dc.html">Events</a><a class="ni" href="#">Responses</a><a class="ni" href="#" style="color: #5E5468">Photos · later</a><a class="ni" href="#">Settings</a>
+</nav>
+</aside>
+<main style="flex-grow: 1; padding: 32px 40px; display: flex; flex-direction: column; gap: 18px; min-width: 0">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h1 class="sf" style="margin: 0; font-size: 34px; font-weight: 500">Households <span style="font-size: 20px; color: #5E5468">96</span></h1>
+<div style="display: flex; gap: 10px"><a class="btn2" href="#">Import CSV</a><a class="btn" href="#">+ New household</a></div>
+</div>
+<div style="display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 20px; align-items: start">
+<div style="border: 1px solid #DCD2E6; border-radius: 12px; background: #fff; overflow: hidden">
+<div style="padding: 12px"><input type="search" aria-label="Search households" placeholder="Search households" style="width: 100%; box-sizing: border-box; min-height: 40px; border: 1.5px solid #8E7BAA; border-radius: 8px; padding: 0 12px; font: 14px 'IBM Plex Sans', sans-serif"></div>
+<a class="hh on" href="#" aria-current="true"><b>Smith household</b><span style="font-size: 13px; color: #5E5468">2 guests · <span class="b dk">✓ Complete</span></span></a>
+<a class="hh" href="#"><b>Garcia household</b><span style="font-size: 13px; color: #5E5468">2 guests · <span class="b">◐ Partial — meal missing</span></span></a>
+<a class="hh" href="#"><b>Lee household</b><span style="font-size: 13px; color: #5E5468">2 guests · <span class="b ds">○ No response</span></span></a>
+<a class="hh" href="#"><b>Brown household</b><span style="font-size: 13px; color: #5E5468">2 + plus-one · <span class="b">◐ Partial</span></span></a>
+<a class="hh" href="#"><b>Nguyen household</b><span style="font-size: 13px; color: #5E5468">4 guests · <span class="b">✕ Declined</span></span></a>
+<a class="hh" href="#" style="border: 0"><b>Patel household</b><span style="font-size: 13px; color: #5E5468">1 guest · <span class="b dk">✓ Complete</span></span></a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div class="pnl" style="flex-direction: row; justify-content: space-between; align-items: center">
+<div><div class="sf" style="font-size: 30px">John &amp; Sarah Smith</div><div style="font-size: 14px; color: #5E5468">Envelope name · used for "Welcome, John &amp; Sarah"</div></div>
+<div style="display: flex; gap: 8px"><a class="btn2" href="#">Edit</a><a class="btn2" href="A-InvitationDetail.dc.html">Invitation ›</a><a class="btn2" href="#">Open portal ↗</a></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div class="pnl"><span class="lbl">Contact &amp; mailing</span><div style="font-size: 14px; line-height: 1.7">[Street address]<br>[City, State ZIP]<br>john@example.com · (555) 555-0100</div></div>
+<div class="pnl"><span class="lbl">Invitation</span><div style="font-size: 14px; line-height: 1.8"><span class="b">■ Locked</span> <span class="b">✓ QR validated</span><br>Code <b class="sf" style="font-family: 'IBM Plex Mono', monospace">K7PX9Q</b> · printed: not yet<br>RSVP: answered Sep 30 by guest</div></div>
+</div>
+<div class="pnl">
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="lbl">Guests &amp; event invitations</span><div style="display: flex; gap: 8px"><a class="btn2" href="#">+ Add guest</a><a class="btn2" href="#">+ Allow plus-one</a></div></div>
+<table>
+<thead><tr><th>Guest</th><th>Type</th><th>Welcome Party</th><th>Rehearsal Dinner</th><th>Ceremony</th><th>Reception</th><th>Brunch</th><th>RSVP</th></tr></thead>
+<tbody>
+<tr><td><b>John Smith</b><br><span style="font-size: 12px; color: #5E5468">primary contact</span></td><td>Adult</td><td><input class="cb" type="checkbox" checked aria-label="John invited to Welcome Party"></td><td><input class="cb" type="checkbox" aria-label="John invited to Rehearsal Dinner"></td><td><input class="cb" type="checkbox" checked aria-label="John invited to Ceremony"></td><td><input class="cb" type="checkbox" checked aria-label="John invited to Reception"></td><td><input class="cb" type="checkbox" checked aria-label="John invited to Brunch"></td><td><span class="b dk">✓ Attending</span></td></tr>
+<tr><td><b>Sarah Smith</b></td><td>Adult</td><td><input class="cb" type="checkbox" checked aria-label="Sarah invited to Welcome Party"></td><td><input class="cb" type="checkbox" aria-label="Sarah invited to Rehearsal Dinner"></td><td><input class="cb" type="checkbox" checked aria-label="Sarah invited to Ceremony"></td><td><input class="cb" type="checkbox" checked aria-label="Sarah invited to Reception"></td><td><input class="cb" type="checkbox" aria-label="Sarah invited to Brunch"></td><td><span class="b dk">✓ Attending</span></td></tr>
+<tr><td style="color: #5E5468">+ Apply a column to everyone</td><td></td><td><a href="#" style="font-size: 13px">All</a></td><td><a href="#" style="font-size: 13px">All</a></td><td><a href="#" style="font-size: 13px">All</a></td><td><a href="#" style="font-size: 13px">All</a></td><td><a href="#" style="font-size: 13px">All</a></td><td></td></tr>
+</tbody>
+</table>
+</div>
+<div class="ann">Invitations are per guest × event (Sarah isn't invited to brunch here). Unchecking an event a guest already answered asks to confirm and keeps their answer in history. Type: Adult / Child / Plus-one (named or unnamed).</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1160}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

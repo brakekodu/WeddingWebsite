@@ -111,9 +111,9 @@ describe("admins", () => {
 });
 
 describe("invitation credentials", () => {
-  it("generates a 24-char base64url token and an 8-char unambiguous code", () => {
+  it("generates a 24-char base64url token and a 6-char unambiguous code", () => {
     expect(s.smithToken).toMatch(/^[A-Za-z0-9_-]{24}$/);
-    expect(s.smithCode).toMatch(/^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{8}$/);
+    expect(s.smithCode).toMatch(/^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{6}$/);
   });
 
   it("ignores client-supplied credentials on insert", async () => {

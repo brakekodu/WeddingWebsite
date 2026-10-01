@@ -21,7 +21,7 @@ import { createClient } from "@supabase/supabase-js";
 import { computeDashboardMetrics } from "../src/lib/dashboard/metrics";
 import { formatGreeting } from "../src/lib/invitations/greeting";
 import { validateInvitationQr } from "../src/lib/invitations/validation";
-import { buildSubmission, initialDraft, pairKey } from "../src/lib/rsvp/flow";
+import { buildSubmission, initialDraft, pairKey, rsvpPairs } from "../src/lib/rsvp/flow";
 import { invitationViewSchema, submitResultSchema } from "../src/lib/rsvp/view";
 import type { Database } from "../src/lib/supabase/database.types";
 import { loadLocalEnv, requireEnv } from "./lib/env";
@@ -157,7 +157,7 @@ async function run() {
     "associate guests",
   );
   check("Token is 24-char base64url", /^[A-Za-z0-9_-]{24}$/.test(invitation.token), invitation.token.length);
-  check("RSVP code is 8 unambiguous characters", /^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{8}$/.test(invitation.rsvp_code));
+  check("RSVP code is 6 unambiguous characters", /^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{6}$/.test(invitation.rsvp_code));
 
   // --- RLS -----------------------------------------------------------------
   const anonGuests = await anon.from("guests").select("id");
@@ -191,12 +191,14 @@ async function run() {
   const started = await anon.rpc("record_rsvp_started", { p_token: invitation.token });
   check("RSVP start recorded", started.error === null, started.error?.message);
   const draft = initialDraft(view);
-  draft.guestAttendance = { [john.id]: "attending", [sarah.id]: "attending" };
+  draft.attendance = { [john.id]: "attending", [sarah.id]: "attending" };
+  for (const p of rsvpPairs(view)) draft.events[p.key] = "attending";
   draft.meals[pairKey(john.id, reception.id)] = meals[0].id;
   draft.meals[pairKey(sarah.id, reception.id)] = meals[1].id;
-  draft.dietary[sarah.id] = "Shellfish allergy (verification)";
+  draft.dietaryTags[sarah.id] = ["shellfish"];
+  draft.dietaryDetails[sarah.id] = "Shellfish allergy (verification)";
   const built = buildSubmission(view, draft);
-  if (!built.ok) throw new Error(built.error);
+  if (!built.ok) throw new Error(built.problem.message);
   const submit = await anon.rpc("submit_rsvp", { p_token: invitation.token, p_payload: built.submission });
   const submitted = submitResultSchema.safeParse(submit.data);
   check(

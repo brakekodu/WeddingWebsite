@@ -1,76 +1,101 @@
-# RSVP flow
+# Guest experience and RSVP flow
 
-Guests never create accounts. The invitation token in the URL identifies the
-invitation; everything is scoped to it.
+Built from the design handoff in `design/brake-wedding-handoff/` (screens 03–19).
+Guests never create accounts; the invitation token in the URL identifies the
+invitation and everything is scoped to it.
 
 ## Entry points
 
 - **QR / link**: `/i/{token}`
-- **Fallback**: `/rsvp` → guest types the printed code (e.g. `ABCD-2345`) →
-  `resolve_rsvp_code` → redirect to `/i/{token}`. Errors: "not found", or
-  "too many attempts" when the global throttle is active (QR still works).
-- Unknown, malformed, or void tokens show a friendly "couldn't find that
-  invitation" page with a link to `/rsvp`.
+- **Fallback**: `/rsvp` → the 6-character code printed on the card →
+  `resolve_rsvp_code` → redirect to `/i/{token}`. No name search, ever.
+  Errors: "We couldn't find that code" (with look-alike hint) or "too many
+  attempts" when the global throttle is active (QR links still work).
+- **Invalid or void link**: "We couldn't open that invitation" with code entry
+  and contact email. Never reveals whose link it was.
 
-## Steps
+## The invitation page `/i/{token}` (state-driven)
 
-Implemented in `src/app/i/[token]/rsvp-experience.tsx`, logic in `src/lib/rsvp/flow.ts`.
+| State            | When                     | Shows                                                                                                                                                                                                  |
+| ---------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| A · Welcome      | Not responded, RSVP open | "Welcome · John & Sarah", date, venue, respond-by date, **Begin RSVP**, See the wedding weekend                                                                                                        |
+| B · Portal       | Responded                | "Welcome back", **Your weekend** (only invited events, who's attending each, Directions, Add all to calendar), travel/hotel, registry, FAQ; sidebar: Your RSVP + **Edit RSVP**, Your dinner, Questions |
+| D · Closed       | After the RSVP deadline  | Portal with answers read-only and "Need a change? Contact us"                                                                                                                                          |
+| C · Wedding week | —                        | Deferred (later phase)                                                                                                                                                                                 |
 
-1. **Welcome** — "Welcome, John & Sarah." / "We're so excited to celebrate with
-   you." Lists the invitation's events. **Begin RSVP** (or **Update RSVP** if
-   they already answered, with their saved answers shown). Starting logs `rsvp_started`.
-2. **Attendance per person** — "Joyfully accepts" / "Regretfully declines"
-   for each guest who has at least one RSVP-required event.
-3. **Events** _(only if someone attending has 2+ RSVP events)_ — per person, per
-   event; defaults to attending.
-4. **Meals** _(only if someone is attending a meal event)_ — one choice per
-   person per meal event, from that event's active options.
-5. **Dietary restrictions** _(only if someone is attending)_ — optional, per person.
-6. **Review** — summary of every answer.
-7. **Submit** → **Confirmation** — "Thank you!" (or "We'll miss you" if
-   everyone declined), summary, and a note that the same link can be used to change it.
+Opening the link remembers the invitation on that device (an httpOnly cookie
+holding the same token). Public pages then show **"◐ Viewing as John & Sarah ·
+Your invitation · Not you?"**, and `/weekend` shows the personal schedule
+(including private events). "Not you?" forgets it.
 
-Greeting names use `display_name` if set, else first name: one name →
-"Welcome, John."; two → "John & Sarah"; more → "A, B & C".
+## RSVP flow `/i/{token}/rsvp`
 
-## Visibility rules
+Logic: `src/lib/rsvp/flow.ts` (unit-tested). UI: `src/app/i/[token]/rsvp/rsvp-flow.tsx`.
 
-- An event appears only if at least one guest **on this invitation** is assigned
-  to it in `guest_events`.
-- Each person is asked only about events **they** are assigned to.
-- Events with `rsvp_required = false` are shown as information ("No RSVP needed").
+1. **Attendance** — per person: ✓ Joyfully accepts / ✕ Regretfully declines.
+   Plus-ones: "Bringing a guest" / "Not this time"; if bringing, first name
+   required (last name optional).
+2. **Events** — only people who accepted, only events each is invited to;
+   explicit Yes/No per person per event. Desktop shows a guest × event grid
+   with "Not invited" cells; mobile lists each event with its invited people.
+3. **Dinner** — only when someone attends an event with meal selection; radio
+   cards per person per meal event (active options only).
+4. **Dietary (optional)** — per attending person: chips (None, Vegetarian,
+   Vegan, Gluten-free, Dairy-free, Nut allergy, Shellfish, Other) + details for
+   the caterer; one optional note to the couple. "Skip" goes straight to Review.
+5. **Review** — Guests · Events · Dinner · Dietary, each with **Edit**;
+   optional email; **Submit RSVP**.
+6. **Confirmation** — "You're all set!" (or "Your changes are saved"), counts,
+   View your wedding weekend · Add events to calendar · Edit RSVP. Everyone
+   declined → "We'll miss you" + registry.
+
+Behavior rules:
+
+- Everyone declines in step 1 → straight to Review.
+- **Nothing is saved until Submit.** The draft is kept on the device
+  (localStorage) so Back/Save & exit/returning resumes where they left off.
+- Continue is always enabled; tapping it with a gap scrolls to the first
+  unanswered person and shows a text error (`role="alert"`).
+- Submit failure keeps answers: "We couldn't save your RSVP — your answers are
+  still here…"
+- **Edit later** re-enters at Review with answers prefilled (`?step=review`).
+- Status is never color-only: ✓ ✕ ○ ! symbols plus words; targets ≥ 44px.
 
 ## What is saved (`submit_rsvp`)
 
-The submission must answer every (guest, RSVP-required event) pair on the
-invitation, exactly once. In one transaction it:
+One transaction, all re-validated in the database:
 
-- upserts `rsvps` (`attending`/`declined`, `invitation_id`, first `submitted_at`, `updated_at`);
-- upserts `meal_selections` for attending guests at meal events, and deletes
-  them where a guest now declines;
-- updates `guests.dietary_restrictions` for attending guests (declined guests'
-  notes are left untouched);
-- logs `rsvp_completed` (first time) or `rsvp_updated` (later), with counts.
+- `rsvps` per (guest, event): attending/declined (every RSVP-required pair
+  answered exactly once; draft events excluded);
+- `meal_selections` for attending guests at meal events (deleted when declining);
+- `guests.dietary_tags` + `guests.dietary_restrictions` for attending guests;
+- plus-one names (only for guests with `plus_one_of` set on this invitation);
+- `invitations.contact_email` and `invitations.guest_message`;
+- `rsvp_activity`: `rsvp_completed` first time, `rsvp_updated` after.
 
-Database-side validation errors map to friendly messages (`src/lib/rsvp/errors.ts`):
-`invitation_not_found`, `response_incomplete`, `response_not_allowed`,
-`meal_required`, `invalid_meal`, `invalid_payload`. A rejected submission writes nothing.
+After the deadline (`wedding_settings.rsvp_deadline`, end of that day in the
+venue time zone) guest submissions fail with `rsvp_closed`; admins can still
+record RSVPs.
 
-## Editing later
+Errors map to friendly text in `src/lib/rsvp/errors.ts`: `invitation_not_found`,
+`response_incomplete`, `response_not_allowed`, `meal_required`, `invalid_meal`,
+`invalid_payload`, `rsvp_closed`.
 
-Guests reopen the same link (or re-enter the code); the flow pre-fills their
-saved answers. A meal option the couple has since hidden is cleared so the
-guest picks again.
+## Plus-ones (admin setup)
 
-## Admin previews and admin-entered RSVPs
+Add a guest to the household with first name **Guest** and "This guest is the
+plus-one of" set to the host; put them on the same invitation and assign their
+events. Guests see "John's guest" until they type a name.
 
-When a signed-in admin opens `/i/{token}` (Preview), no `invitation_accessed`
-or `rsvp_started` activity is logged. If the admin submits the form (e.g. for a
-guest who replied by phone), it is saved normally and logged with actor `admin`.
+## Visibility rules
 
-## Activity log
+- Public pages show only events with visibility **Public** (`get_public_site`).
+- An invitation shows an event only if one of its guests is assigned to it;
+  **Draft** events are hidden everywhere.
+- Each person is asked only about their own events.
 
-`invitation_accessed` (at most once per 30 minutes per invitation),
-`rsvp_started` (same), `rsvp_completed`, `rsvp_updated`. No IP addresses,
-user agents, or device data. It exists to answer "has the Smiths' invitation
-been opened?", not to track people.
+## Admin previews and activity
+
+Admin previews of `/i/{token}` aren't logged as guest activity. RSVPs submitted
+while signed in as an admin are logged with actor `admin`. Activity stores type,
+actor, and time only — no IP addresses or device data.

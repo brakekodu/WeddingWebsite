@@ -11,7 +11,7 @@ import { greetingName, joinNames } from "@/lib/invitations/greeting";
 import { generateQrSvg } from "@/lib/invitations/qr";
 import { buildInvitationUrl, buildRsvpCodeUrl, isProvisionalBaseUrl } from "@/lib/invitations/url";
 import { effectiveValidationStatus } from "@/lib/invitations/validation";
-import { SITE_NAME } from "@/lib/site";
+import { coupleNames } from "@/content/site";
 import { markPrinted, recordProofPrinted } from "../../actions";
 import { PrintButton } from "./print-button";
 
@@ -95,7 +95,7 @@ export default async function PrintInvitationPage(props: PageProps<"/admin/invit
           </div>
         )}
         <header>
-          <p className="text-xs tracking-[0.3em] text-stone-500 uppercase">{SITE_NAME}</p>
+          <p className="text-xs tracking-[0.3em] text-stone-500 uppercase">{coupleNames}</p>
           <h2 className="mt-4 font-serif text-3xl leading-tight">{names || "Guest"}</h2>
           <p className="mt-2 font-serif text-lg text-stone-600">Kindly reply</p>
         </header>

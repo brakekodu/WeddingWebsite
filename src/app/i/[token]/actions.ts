@@ -2,12 +2,15 @@
 
 import { z } from "zod";
 import { isInvitationToken } from "@/lib/invitations/credentials";
+import { DIETARY_TAGS } from "@/lib/rsvp/dietary";
 import { rsvpErrorMessage } from "@/lib/rsvp/errors";
 import { submitResultSchema, type InvitationView } from "@/lib/rsvp/view";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-// Shape check only. The database validates every guest, event, and meal
-// against the invitation, so this is not the security boundary.
+const tagKeys = DIETARY_TAGS.map((t) => t.key) as [string, ...string[]];
+
+// Shape check only. The database validates every guest, event, meal, and
+// name against the invitation, so this is not the security boundary.
 const submissionSchema = z.object({
   responses: z
     .array(
@@ -24,9 +27,21 @@ const submissionSchema = z.object({
       z.object({
         guest_id: z.string().max(64),
         dietary_restrictions: z.string().max(500).nullable(),
+        dietary_tags: z.array(z.enum(tagKeys)).max(tagKeys.length),
       }),
     )
     .max(100),
+  plus_ones: z
+    .array(
+      z.object({
+        guest_id: z.string().max(64),
+        first_name: z.string().min(1).max(100),
+        last_name: z.string().max(100).nullable(),
+      }),
+    )
+    .max(100),
+  contact_email: z.string().max(254).nullable(),
+  message: z.string().max(1000).nullable(),
 });
 
 export type SubmitRsvpResult =
@@ -40,7 +55,7 @@ export async function submitRsvp(token: string, submission: unknown): Promise<Su
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.rpc("submit_rsvp", { p_token: token, p_payload: parsed.data });
   if (error) {
-    if (!error.message.match(/^[a-z_]+$/)) console.error("submit_rsvp failed:", error);
+    if (!/^[a-z_]+$/.test(error.message)) console.error("submit_rsvp failed:", error);
     return { ok: false, error: rsvpErrorMessage(error.message) };
   }
 

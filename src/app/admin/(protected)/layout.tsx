@@ -16,6 +16,7 @@ const NAV = [
   { href: "/admin/guests", label: "Guests" },
   { href: "/admin/events", label: "Events" },
   { href: "/admin/invitations", label: "Invitations" },
+  { href: "/admin/settings", label: "Settings" },
 ] as const;
 
 /** Every page under this layout requires an authenticated administrator. */

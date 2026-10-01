@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Open UX questions</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.q{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:16px 0;border-bottom:1px solid #E4DBEC}
+.q .n{font:600 14px 'IBM Plex Mono',monospace;width:32px;height:32px;border-radius:50%;border:1.5px solid #6F5A8F;display:flex;align-items:center;justify-content:center;background:#fff}
+.q b{display:block;font-size:16px;margin-bottom:4px}
+.q span{font-size:14px;line-height:1.5;color:#4A4056}
+.q i{display:block;font-style:normal;font:12px/1.5 'IBM Plex Mono',monospace;color:#7a2c0c;margin-top:6px}
+.blk{background:#fff;border:1px solid #DCD2E6;border-radius:12px;padding:8px 24px 12px}
+.ac{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:14px 0;border-bottom:1px solid #4A4056}
+.ac .n{font:600 13px 'IBM Plex Mono',monospace;color:#fff}
+.ac b{display:block;font-size:15px;margin-bottom:3px;color:#fff}
+.ac span{font-size:14px;line-height:1.5;color:#DCD2E6}
+</style>
+</helmet>
+<div style="width: 1280px; min-height: 2500px; box-sizing: border-box; padding: 64px; display: flex; flex-direction: column; gap: 40px; background: #F1EAF6">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div class="lbl">Brake Wedding · Deliverable 8</div>
+<h1 class="sf" style="margin: 0; font-size: 48px; font-weight: 500">Open questions for the couple</h1>
+<p style="margin: 0; font-size: 16px; color: #5E5468; max-width: 860px; line-height: 1.5">Decisions the wireframes deliberately leave open. Orange lines show what's drawn now as a default, so nothing is locked in by accident.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div><div class="lbl" style="margin-bottom: 10px">RSVP logic</div>
+<div class="blk">
+<div class="q"><span class="n">1</span><div><b>Two questions or one?</b><span>Step 1 asks "celebrating with us?" per person, step 2 asks per event. For invitations with only Ceremony + Reception, should step 2 be skipped and "accept" mean both?</span><i>Drawn: both steps always; skip is an easy change.</i></div></div>
+<div class="q"><span class="n">2</span><div><b>Ceremony without reception?</b><span>Can someone attend one but not the other? If never, group them as one RSVP line to save taps.</span><i>Drawn: separate lines.</i></div></div>
+<div class="q"><span class="n">3</span><div><b>Plus-ones</b><span>Who gets one? Must they be named before the wedding? Do they pick a meal?</span><i>Drawn: optional name, then treated as a full guest.</i></div></div>
+<div class="q"><span class="n">4</span><div><b>Children</b><span>Are kids invited? Listed by name? Kids meal option?</span><i>Drawn: "child" guest type and a Kids meal in admin.</i></div></div>
+<div class="q"><span class="n">5</span><div><b>Who answers for the household?</b><span>Anyone holding the link can answer and edit for everyone on it. OK, or should each adult confirm separately?</span><i>Drawn: one person answers for all.</i></div></div>
+<div class="q"><span class="n">6</span><div><b>Showing who's invited to what</b><span>On desktop, show "Not invited" for Sarah under brunch, or just hide her row? (Mobile hides it.)</span><i>Drawn: desktop shows "Not invited".</i></div></div>
+<div class="q"><span class="n">7</span><div><b>After the RSVP deadline</b><span>Lock answers (read-only + "contact us") or still allow edits and notify you?</span><i>Drawn: read-only.</i></div></div>
+<div class="q"><span class="n">8</span><div><b>Email at review</b><span>Optional, required, or not asked? Do you want confirmation and reminder emails?</span><i>Drawn: optional.</i></div></div>
+<div class="q" style="border: 0"><span class="n">9</span><div><b>Note to the couple / song requests</b><span>Keep, change, or remove?</span><i>Drawn: one optional note on the dietary step.</i></div></div>
+</div></div>
+
+<div><div class="lbl" style="margin-bottom: 10px">Public site &amp; privacy</div>
+<div class="blk">
+<div class="q"><span class="n">10</span><div><b>Venue address on the public site</b><span>Show full addresses publicly, or only city + date until a guest opens their invitation?</span><i>Drawn: public addresses for public events only.</i></div></div>
+<div class="q"><span class="n">11</span><div><b>Navigation</b><span>OK to merge Wedding Party into Our Story and keep 6 nav links?</span></div></div>
+<div class="q" style="border: 0"><span class="n">12</span><div><b>Site-wide password?</b><span>Some couples put a password on the whole public site. Wanted?</span><i>Drawn: open public site; private events protected by token.</i></div></div>
+</div></div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div><div class="lbl" style="margin-bottom: 10px">Admin &amp; printing</div>
+<div class="blk">
+<div class="q"><span class="n">13</span><div><b>Who gets admin access?</b><span>Just the two of you, or also a planner or parents? Do any need view-only access?</span></div></div>
+<div class="q"><span class="n">14</span><div><b>Print in batches?</b><span>Allow printing the ready invitations while a few are still being fixed, or only all at once?</span><i>Drawn: "Print the 85 ready" option.</i></div></div>
+<div class="q"><span class="n">15</span><div><b>How will invitations be printed?</b><span>Home printer (PDF), a stationer (print-ready PDF), or a stationer merging your QR codes (CSV + PNGs)? This decides the export format.</span></div></div>
+<div class="q"><span class="n">16</span><div><b>Answers by phone or text</b><span>Confirm you want to enter RSVPs for guests yourselves.</span><i>Drawn: "Record RSVP" on a guest.</i></div></div>
+<div class="q" style="border: 0"><span class="n">17</span><div><b>Reminders</b><span>Send nudges to non-responders from the dashboard (email / text)? In scope for v1?</span><i>Not drawn.</i></div></div>
+</div></div>
+
+<div><div class="lbl" style="margin-bottom: 10px">Wedding week &amp; photos</div>
+<div class="blk">
+<div class="q"><span class="n">18</span><div><b>When does wedding-week mode begin?</b><span>7 days out? The day before the first event? Who posts announcements — and do they need to go out as texts?</span></div></div>
+<div class="q"><span class="n">19</span><div><b>Photo uploads</b><span>When do they open? Do you approve photos before others see them? Who can see the gallery: guests only, or the public?</span><i>Drawn: opens after the ceremony, approved by you.</i></div></div>
+<div class="q" style="border: 0"><span class="n">20</span><div><b>Day-of contact</b><span>Who do guests contact on the day (coordinator, wedding-party member)?</span></div></div>
+</div></div>
+
+<div style="background: #3B2F4A; border-radius: 12px; padding: 24px 28px 12px; display: flex; flex-direction: column">
+<div style="font: 500 11px 'IBM Plex Mono', monospace; letter-spacing: .08em; text-transform: uppercase; color: #DCD2E6">Check against the architecture before hi-fi</div>
+<div class="sf" style="font-size: 24px; color: #fff; margin: 6px 0 8px">What these wireframes assume about the data</div>
+<div class="ac"><span class="n">A</span><div><b>Responses per guest × event</b><span>Never one RSVP per household. Every screen assumes this.</span></div></div>
+<div class="ac"><span class="n">B</span><div><b>Event invitations per guest</b><span>Mixed households (brunch for John only) must be possible.</span></div></div>
+<div class="ac"><span class="n">C</span><div><b>Guest-level "attending" flag</b><span>Step 1 writes it and gates step 2. Stored, or derived from event responses?</span></div></div>
+<div class="ac"><span class="n">D</span><div><b>Meal per guest per meal-event</b><span>So the rehearsal dinner and the reception can both have meals. Dietary needs are stored per guest.</span></div></div>
+<div class="ac"><span class="n">E</span><div><b>Tokens are permanent once printed</b><span>Can be revoked (shows the error page); never regenerated silently.</span></div></div>
+<div class="ac"><span class="n">F</span><div><b>Fallback code</b><span>6 characters with no look-alike letters, unique, with rate-limited lookups. No name search anywhere.</span></div></div>
+<div class="ac"><span class="n">G</span><div><b>Invite-only events filtered on the server</b><span>Not just hidden on screen: they're missing from public page data and API responses.</span></div></div>
+<div class="ac"><span class="n">H</span><div><b>Portal state is computed</b><span>From RSVP status + deadline + wedding-week dates set in Settings.</span></div></div>
+<div class="ac"><span class="n">I</span><div><b>Invitation lifecycle + validation checks</b><span>Draft → Generated → Validated → Test printed → Locked → Printed, with the checklist on the detail screen.</span></div></div>
+<div class="ac"><span class="n">J</span><div><b>Audit trail</b><span>Who changed an RSVP (guest or admin) and when — this feeds Activity and Guest history.</span></div></div>
+<div class="ac" style="border: 0"><span class="n">K</span><div><b>Partial saves</b><span>Answers stay on the device until Submit, or save step by step on the server? This decides whether "partly answered households" can be shown.</span></div></div>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2500}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

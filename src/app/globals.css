@@ -1,8 +1,23 @@
 @import "tailwindcss";
 
+/* Approved palette (design/brake-wedding-handoff/README.md, from the florist board). */
 @theme inline {
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --color-plum: #6f5a8f; /* primary buttons, selected states, badges */
+  --color-plum-hover: #4f3e69;
+  --color-plum-deep: #3b2f4a; /* dark bands */
+  --color-ink: #2e2638; /* body text */
+  --color-muted: #5e5468; /* secondary text */
+  --color-wisteria: #8e7baa; /* control borders */
+  --color-mist: #dcd2e6; /* dividers, panel borders */
+  --color-lilac: #f1eaf6; /* page ground */
+  --color-cream: #fbf8f2; /* soft sections */
+  --color-sage: #5f7a5b; /* success, validated */
+  --color-error: #8f1d1d;
+  --color-placeholder: #efe9f4;
+
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-plex-serif), Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
 :root {
@@ -10,9 +25,25 @@
 }
 
 body {
-  background: #faf8f5;
-  color: #1c1917;
-  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Visible keyboard focus everywhere (accessibility requirement). */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-plum);
+  outline-offset: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 @media print {

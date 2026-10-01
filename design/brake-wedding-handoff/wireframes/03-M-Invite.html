@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Invitation landing</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.ph{background:#EFE9F4;border:1px dashed #A493BC;display:flex;align-items:center;justify-content:center;text-align:center;color:#625874;font:12px/1.4 'IBM Plex Mono',monospace;box-sizing:border-box;padding:8px}
+.btn{display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:52px;padding:0 24px;background:#6F5A8F;color:#fff;border:2px solid #6F5A8F;border-radius:8px;font:600 16px 'IBM Plex Sans',sans-serif;text-decoration:none}
+.btn:hover{color:#fff;background:#4F3E69}
+.btn2{display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:48px;padding:0 20px;background:#fff;color:#2E2638;border:1.5px solid #6F5A8F;border-radius:8px;font:600 15px 'IBM Plex Sans',sans-serif;text-decoration:none}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; display: flex; flex-direction: column; background: #fff; overflow: hidden">
+<div style="height: 56px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #E4DBEC">
+<div class="ph" style="width: 72px; height: 32px; padding: 0">[monogram]</div>
+</div>
+<div class="ph" style="height: 280px; border-left: 0; border-right: 0">[engagement photo]</div>
+<div style="padding: 28px 24px 24px; display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center; flex-grow: 1">
+<div class="lbl">Welcome</div>
+<h1 class="sf" style="margin: 0; font-size: 38px; line-height: 1.1; font-weight: 500">John &amp; Sarah</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #4A4056">We're so excited to celebrate with you.</p>
+<div style="display: flex; flex-direction: column; gap: 2px; margin-top: 4px">
+<div style="font-weight: 600; font-size: 16px">Saturday, [Month Day, Year]</div>
+<div style="font-size: 15px; color: #5E5468">[Venue] · [City, State]</div>
+</div>
+<div style="font-size: 14px; color: #5E5468; border: 1px solid #D3C6E0; border-radius: 999px; padding: 6px 14px">Kindly respond by [RSVP deadline]</div>
+</div>
+<div style="padding: 0 24px 16px; display: flex; flex-direction: column; gap: 12px">
+<a class="btn" href="M-Attendance.dc.html">Begin RSVP</a>
+<a class="btn2" href="M-Portal.dc.html">See the wedding weekend</a>
+<div style="text-align: center; font-size: 13px; color: #5E5468; padding-top: 4px">Not John or Sarah? <a href="#">Let us know</a></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

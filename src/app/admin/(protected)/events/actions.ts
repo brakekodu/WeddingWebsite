@@ -24,7 +24,8 @@ function eventFields(fd: FormData) {
   const startsAt = formLocalDateTime(fd, "starts_at");
   const endsAt = formLocalDateTime(fd, "ends_at");
   if (startsAt && endsAt && endsAt < startsAt) throw new UserFacingError("The end time must be after the start time.");
-  const visibility = fd.get("visibility") === "public" ? "public" : "invited_only";
+  const raw = fd.get("visibility");
+  const visibility = raw === "public" || raw === "draft" ? raw : "invited_only";
   return {
     name: formRequired(fd, "name", "Event name", 120),
     description: formOptional(fd, "description"),
@@ -33,6 +34,8 @@ function eventFields(fd: FormData) {
     time_zone: formOptional(fd, "time_zone"),
     location_name: formOptional(fd, "location_name"),
     location_address: formOptional(fd, "location_address"),
+    attire: formOptional(fd, "attire"),
+    guest_notes: formOptional(fd, "guest_notes"),
     rsvp_required: rsvpRequired,
     meal_selection_required: mealRequired,
     visibility,

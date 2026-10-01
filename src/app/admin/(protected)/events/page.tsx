@@ -57,6 +57,7 @@ export default async function EventsPage() {
                   {e.rsvp_required ? <Badge tone="info">RSVP</Badge> : <Badge>No RSVP</Badge>}
                   {e.meal_selection_required && <Badge tone="info">Meals ({e.meal_options[0]?.count ?? 0})</Badge>}
                   {e.visibility === "public" && <Badge>Public</Badge>}
+                  {e.visibility === "draft" && <Badge tone="warn">Draft</Badge>}
                 </td>
               </tr>
             ))}

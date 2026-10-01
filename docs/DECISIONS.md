@@ -109,3 +109,38 @@ removing one is rare.
 Apex is canonical: `APP_BASE_URL=https://kevinandsarina.com` (shorter QR).
 `www` is attached too so typed URLs work. Tokens never embed the domain.
 Auto-renew must stay on — a lapsed domain breaks every printed QR code.
+
+### D18 — Design handoff is the source of truth for the guest site
+
+`design/brake-wedding-handoff/` (wireframes, flows, components, palette) defines
+routes, content, and behavior. Where the handoff left a question open (screen 27),
+we built the default it drew; see "Open questions — defaults used" below.
+
+### D19 — 6-character RSVP codes
+
+Per the handoff. 31⁶ ≈ 887M codes; with the global DB-side throttle (D15)
+brute force is still impractical. Earlier 8-character codes remain valid.
+
+### D20 — Website text lives in `src/content/site.ts` (for now)
+
+Names, story, travel, registry links, and FAQ are typed content in one file —
+simple, versioned, and deployed on push. Behavior settings that must be
+enforced (RSVP deadline) live in the database. Editing site text from
+Admin → Settings is planned with the admin redesign.
+
+### D21 — "Viewing as" via an httpOnly cookie
+
+Opening `/i/{token}` stores the same bearer token in an httpOnly, SameSite=Lax
+cookie so public pages can personalize. It grants nothing beyond the link
+itself; "Not you?" clears it.
+
+### Open questions (handoff screen 27) — defaults used
+
+1 Both steps always (attendance, then events). · 2 Ceremony and reception are
+separate lines. · 3 Plus-one: optional name, then a full guest. · 4 Kids: no
+special handling yet. · 5 One person answers for the whole invitation. ·
+6 Desktop shows "Not invited"; mobile hides. · 7 Read-only after the deadline. ·
+8 Email optional; no emails are sent yet. · 9 One optional note, on the dietary
+step. · 10 Addresses shown for public events only. · 11 Wedding Party merged
+into Our Story; 6 nav links. · 12 No site-wide password. · 18–19 Wedding-week
+mode and photo uploads deferred.

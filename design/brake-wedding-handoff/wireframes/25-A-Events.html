@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin events</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.btn{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:40px;padding:0 16px;background:#6F5A8F;color:#fff;border:2px solid #6F5A8F;border-radius:8px;font:600 14px 'IBM Plex Sans',sans-serif;text-decoration:none}
+.btn:hover{color:#fff;background:#4F3E69}
+.btn2{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:40px;padding:0 14px;background:#fff;color:#2E2638;border:1.5px solid #8E7BAA;border-radius:8px;font:600 13px 'IBM Plex Sans',sans-serif;text-decoration:none;white-space:nowrap}
+.ann{background:#fff3e6;border:1px solid #c2410c;color:#7a2c0c;font:12px/1.5 'IBM Plex Mono',monospace;border-radius:4px;padding:10px 12px;box-sizing:border-box}
+.ni{min-height:40px;padding:0 12px;display:flex;align-items:center;border-radius:8px;font-size:14px;text-decoration:none;color:#2E2638}
+.ni.on{background:#6F5A8F;color:#fff;font-weight:600}
+.b{display:inline-flex;align-items:center;gap:4px;border:1px solid #8E7BAA;border-radius:999px;padding:1px 8px;font-size:12px;white-space:nowrap;background:#fff}
+.b.dk{background:#6F5A8F;color:#fff;border-color:#6F5A8F}
+.b.ds{border-style:dashed}
+.ec{display:flex;flex-direction:column;gap:6px;padding:16px;border:1px solid #DCD2E6;border-radius:10px;background:#fff;text-decoration:none}
+.ec.on{border:2px solid #6F5A8F}
+.pnl{border:1px solid #DCD2E6;border-radius:12px;background:#fff;padding:20px;display:flex;flex-direction:column;gap:12px}
+.mc{border:1px solid #DCD2E6;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:2px;background:#fff}
+.mc .v{font:500 30px/1.1 'IBM Plex Serif',Georgia,serif}
+.mc .k{font-size:13px;color:#5E5468}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5E5468;padding:0 10px 10px;border-bottom:1px solid #6F5A8F}
+td{padding:11px 10px;border-bottom:1px solid #EFE9F4}
+.num{text-align:right;font-family:'IBM Plex Mono',monospace}
+.kv{display:flex;justify-content:space-between;font-size:14px;min-height:30px;align-items:center;border-bottom:1px solid #EFE9F4}
+</style>
+</helmet>
+<div style="width: 1440px; min-height: 1240px; display: flex; flex-direction: column; background: #F1EAF6">
+<div style="background: #3B2F4A; color: #fff; padding: 12px 40px; display: flex; gap: 16px; align-items: center; font: 13px 'IBM Plex Mono', monospace"><span>/admin/events</span><span style="border: 1px solid #fff; background: #fff; color: #2E2638; border-radius: 999px; padding: 2px 10px">● Admin</span><span style="color: #DCD2E6">Events · configurable · visibility controls whether an event can ever appear on the public site</span></div>
+<div style="display: flex; flex-grow: 1">
+<aside style="width: 232px; flex-shrink: 0; background: #fff; border-right: 1px solid #E4DBEC; padding: 24px 16px; display: flex; flex-direction: column; gap: 4px; box-sizing: border-box">
+<div class="sf" style="font-size: 20px; padding: 0 12px 2px">[Name] &amp; [Name]</div>
+<div style="font-size: 13px; color: #5E5468; padding: 0 12px 20px">[Date] · 123 days to go</div>
+<nav aria-label="Admin" style="display: flex; flex-direction: column; gap: 2px">
+<a class="ni" href="A-Dashboard.dc.html">Dashboard</a><a class="ni" href="A-Guests.dc.html">Guests</a><a class="ni" href="A-Households.dc.html">Households</a><a class="ni" href="A-Invitations.dc.html">Invitations</a><a class="ni on" href="A-Events.dc.html" aria-current="page">Events</a><a class="ni" href="#">Responses</a><a class="ni" href="#" style="color: #5E5468">Photos · later</a><a class="ni" href="#">Settings</a>
+</nav>
+</aside>
+<main style="flex-grow: 1; padding: 32px 40px; display: flex; flex-direction: column; gap: 18px; min-width: 0">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h1 class="sf" style="margin: 0; font-size: 34px; font-weight: 500">Events</h1>
+<a class="btn" href="#">+ New event</a>
+</div>
+<div style="display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div class="lbl">Friday</div>
+<a class="ec" href="#"><b>Welcome Party</b><span style="font-size: 13px; color: #5E5468">7:00 PM · <span class="b ds">Invite-only</span></span><span style="font-size: 13px">61 attending of 96</span></a>
+<a class="ec" href="#"><b>Rehearsal Dinner</b><span style="font-size: 13px; color: #5E5468">5:00 PM · <span class="b ds">Invite-only</span> · meal</span><span style="font-size: 13px">30 attending of 34</span></a>
+<div class="lbl" style="margin-top: 6px">Saturday</div>
+<a class="ec" href="#"><b>Ceremony</b><span style="font-size: 13px; color: #5E5468">4:30 PM · <span class="b">○ Public</span></span><span style="font-size: 13px">128 attending of 184</span></a>
+<a class="ec on" href="#" aria-current="true"><b>Reception</b><span style="font-size: 13px; color: #5E5468">6:00 PM · <span class="b">○ Public</span> · meal</span><span style="font-size: 13px">124 attending of 184</span></a>
+<a class="ec" href="#"><b>After Party</b><span style="font-size: 13px; color: #5E5468">11:00 PM · <span class="b ds">Draft — hidden</span></span><span style="font-size: 13px">Not yet assigned</span></a>
+<div class="lbl" style="margin-top: 6px">Sunday</div>
+<a class="ec" href="#"><b>Farewell Brunch</b><span style="font-size: 13px; color: #5E5468">10:00 AM · <span class="b ds">Invite-only</span></span><span style="font-size: 13px">70 attending of 120</span></a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div class="pnl" style="flex-direction: row; justify-content: space-between; align-items: center">
+<div><div class="sf" style="font-size: 30px">Reception</div><div style="font-size: 14px; color: #5E5468">Saturday [Month Day] · 6:00–11:00 PM · [Venue], [Address]</div></div>
+<div style="display: flex; gap: 8px"><a class="btn2" href="#">Edit event</a><a class="btn2" href="#">Manage invitees</a><a class="btn" href="#">Caterer export</a></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<div class="mc"><span class="v">184</span><span class="k">Invited</span></div>
+<div class="mc"><span class="v">124</span><span class="k">✓ Attending</span></div>
+<div class="mc"><span class="v">23</span><span class="k">✕ Declined</span></div>
+<div class="mc" style="border: 2px solid #6F5A8F"><span class="v">37</span><span class="k">○ No response</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div class="pnl">
+<span class="lbl">Settings</span>
+<div class="kv"><span>Visibility</span><span><b>Public</b> — shown on /weekend</span></div>
+<div class="kv"><span>Requires meal choice</span><span>✓ Yes</span></div>
+<div class="kv"><span>Attire</span><span>[Dress code]</span></div>
+<div class="kv" style="border: 0"><span>Shown to guests as</span><span>"Reception"</span></div>
+</div>
+<div class="pnl">
+<div style="display: flex; justify-content: space-between"><span class="lbl">Meal options &amp; counts</span><a href="#" style="font-size: 13px; font-weight: 600">Edit options</a></div>
+<table><tbody>
+<tr><td>[Beef entrée]</td><td class="num">52</td></tr><tr><td>[Chicken entrée]</td><td class="num">48</td></tr><tr><td>[Vegetarian entrée]</td><td class="num">21</td></tr><tr><td><b>! Not chosen</b></td><td class="num"><b>3</b></td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="pnl">
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="lbl">Guest list · 184</span><div style="display: flex; gap: 6px"><button class="btn2">All</button><button class="btn2">Attending</button><button class="btn2">Declined</button><button class="btn2">No response</button></div></div>
+<table>
+<thead><tr><th>Guest</th><th>Household</th><th>Response</th><th>Meal</th><th>Dietary</th></tr></thead>
+<tbody>
+<tr><td>John Smith</td><td>Smith</td><td><span class="b dk">✓ Attending</span></td><td>Beef</td><td>—</td></tr>
+<tr><td>Sarah Smith</td><td>Smith</td><td><span class="b dk">✓ Attending</span></td><td>Chicken</td><td>Gluten-free</td></tr>
+<tr><td>Maria Garcia</td><td>Garcia</td><td><span class="b dk">✓ Attending</span></td><td><b>! Missing</b></td><td>—</td></tr>
+<tr><td>Grace Lee</td><td>Lee</td><td><span class="b ds">○ No response</span></td><td>—</td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+<div class="ann">Changing an event from Invite-only to Public is confirmed with a warning ("This event will appear on your public website"). Draft events are invisible to guests even if assigned.</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

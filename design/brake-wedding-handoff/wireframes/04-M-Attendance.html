@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RSVP — who's attending</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.btn{display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:52px;padding:0 24px;background:#6F5A8F;color:#fff;border:2px solid #6F5A8F;border-radius:8px;font:600 16px 'IBM Plex Sans',sans-serif;text-decoration:none}
+.btn:hover{color:#fff;background:#4F3E69}
+.card{border:1px solid #D3C6E0;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;background:#fff}
+.opt{min-height:52px;border:1.5px solid #8E7BAA;border-radius:8px;background:#fff;font:500 15px 'IBM Plex Sans',sans-serif;color:#2E2638;cursor:pointer;padding:0 8px}
+.opt.on{background:#6F5A8F;color:#fff;border-color:#6F5A8F;font-weight:600}
+.inp{min-height:48px;border:1.5px solid #8E7BAA;border-radius:8px;padding:0 12px;font:16px 'IBM Plex Sans',sans-serif;box-sizing:border-box;width:100%}
+</style>
+</helmet>
+<div style="width: 390px; height: 1000px; display: flex; flex-direction: column; background: #fff">
+<div style="display: flex; flex-direction: column; border-bottom: 1px solid #E4DBEC">
+<div style="height: 52px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between">
+<a href="M-Invite.dc.html" style="min-height: 44px; min-width: 64px; display: flex; align-items: center; text-decoration: none; font-size: 15px">‹ Back</a>
+<span class="lbl">Step 1 of 5 · Attendance</span>
+<span style="width: 64px"></span>
+</div>
+<div style="height: 4px; background: #E4DBEC"><div style="height: 4px; width: 20%; background: #6F5A8F"></div></div>
+</div>
+<div style="padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; flex-grow: 1">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 class="sf" style="margin: 0; font-size: 30px; font-weight: 500; line-height: 1.15">Will you be celebrating with us?</h1>
+<p style="margin: 0; font-size: 15px; color: #5E5468; line-height: 1.5">Answer for each person on your invitation. You'll choose specific events next.</p>
+</div>
+<div class="card">
+<div style="font-weight: 600; font-size: 18px">John Smith</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button class="opt on" aria-pressed="true" onClick="">✓ Joyfully accepts</button>
+<button class="opt " aria-pressed="" onClick="">✕ Regretfully declines</button>
+</div>
+</div>
+<div class="card">
+<div style="font-weight: 600; font-size: 18px">Sarah Smith</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button class="opt " aria-pressed="" onClick="">✓ Joyfully accepts</button>
+<button class="opt " aria-pressed="" onClick="">✕ Regretfully declines</button>
+</div>
+
+<div role="alert" style="font-size: 14px; color: #8f1d1d; display: flex; gap: 6px; align-items: center"><b>!</b> Please choose an answer for Sarah.</div>
+
+</div>
+<div class="card" style="border-style: dashed">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><div style="font-weight: 600; font-size: 18px">John's guest</div><span class="lbl">Plus-one</span></div>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500">Their name<input class="inp" type="text" placeholder="First and last name"></label>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button class="opt">Bringing a guest</button>
+<button class="opt on" aria-pressed="true">✓ Not this time</button>
+</div>
+</div>
+</div>
+<div style="padding: 16px 20px 24px; border-top: 1px solid #E4DBEC; display: flex; flex-direction: column; gap: 8px">
+<a class="btn" href="M-Events.dc.html">Continue</a>
+<div style="text-align: center; font-size: 13px; color: #5E5468">Nothing is sent until you review.</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { john: 'yes', sarah: null }; }
+  renderVals() {
+    const j = this.state.john, s = this.state.sarah;
+    return {
+      jY: j === 'yes' ? 'on' : '', jN: j === 'no' ? 'on' : '',
+      jYp: j === 'yes' ? 'true' : 'false', jNp: j === 'no' ? 'true' : 'false',
+      sY: s === 'yes' ? 'on' : '', sN: s === 'no' ? 'on' : '',
+      sYp: s === 'yes' ? 'true' : 'false', sNp: s === 'no' ? 'true' : 'false',
+      sarahMissing: s === null,
+      johnYes: () => this.setState({ john: 'yes' }), johnNo: () => this.setState({ john: 'no' }),
+      sarahYes: () => this.setState({ sarah: 'yes' }), sarahNo: () => this.setState({ sarah: 'no' })
+    };
+  }
+}
+</script>
+</body>
+</html>

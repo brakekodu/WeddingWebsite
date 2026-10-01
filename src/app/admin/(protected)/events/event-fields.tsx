@@ -45,10 +45,11 @@ export function EventFields({ event }: { event?: EventRow }) {
         label="Visibility"
         defaultValue={event?.visibility ?? "invited_only"}
         options={[
-          { value: "invited_only", label: "Invited guests only" },
-          { value: "public", label: "Public schedule (future site) + invited guests" },
+          { value: "invited_only", label: "Invite-only — only invited guests see it" },
+          { value: "public", label: "Public — on the website schedule for everyone" },
+          { value: "draft", label: "Draft — hidden from everyone" },
         ]}
-        hint="Either way, the RSVP page only shows events a guest is assigned to."
+        hint="Guests are only ever asked to RSVP for events they are assigned to."
       />
       <TextField name="location_name" label="Location name" defaultValue={event?.location_name} />
       <TextField name="location_address" label="Location address" defaultValue={event?.location_address} />
@@ -57,6 +58,14 @@ export function EventFields({ event }: { event?: EventRow }) {
         label="Description for guests"
         defaultValue={event?.description}
         className="sm:col-span-2"
+      />
+      <TextField name="attire" label="Attire" defaultValue={event?.attire} placeholder="Garden formal" />
+      <TextAreaField
+        name="guest_notes"
+        label="Notes for guests"
+        defaultValue={event?.guest_notes}
+        hint="e.g. Please arrive by 4:15 PM · Shuttle from the hotel at 3:45 PM"
+        maxLength={1000}
       />
       <CheckboxField
         name="rsvp_required"

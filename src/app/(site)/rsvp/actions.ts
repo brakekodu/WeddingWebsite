@@ -32,7 +32,9 @@ export async function lookupRsvpCode(_prev: CodeLookupState, formData: FormData)
     };
   }
   if (result.data.status === "not_found") {
-    return { error: "We couldn't find that code. Please check it and try again." };
+    return {
+      error: "We couldn't find that code. Check letters that look alike (0 and O, 1 and I) and try again.",
+    };
   }
   redirect(`/i/${result.data.token}`);
 }

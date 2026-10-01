@@ -6,6 +6,7 @@ const MESSAGES: Record<string, string> = {
   meal_required: "Please choose a meal for each person attending.",
   invalid_meal: "One of the meal choices is no longer available. Please reload and choose again.",
   invalid_payload: "Something went wrong with the form. Please reload and try again.",
+  rsvp_closed: "The RSVP deadline has passed. Please contact us if you need to make a change.",
 };
 
 const FALLBACK = "We couldn't save your RSVP just now. Please try again in a moment.";

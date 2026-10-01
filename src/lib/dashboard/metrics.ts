@@ -6,6 +6,7 @@
  */
 import { fullName } from "@/lib/invitations/greeting";
 import { effectiveValidationStatus } from "@/lib/invitations/validation";
+import { describeDietary } from "@/lib/rsvp/dietary";
 
 export interface DashboardInput {
   baseUrl: string;
@@ -18,7 +19,13 @@ export interface DashboardInput {
     validated_url: string | null;
   }[];
   invitationGuests: { invitation_id: string; guest_id: string }[];
-  guests: { id: string; first_name: string; last_name: string | null; dietary_restrictions: string | null }[];
+  guests: {
+    id: string;
+    first_name: string;
+    last_name: string | null;
+    dietary_restrictions: string | null;
+    dietary_tags?: string[];
+  }[];
   events: { id: string; name: string; rsvp_required: boolean; meal_selection_required: boolean }[];
   guestEvents: { guest_id: string; event_id: string }[];
   rsvps: { guest_id: string; event_id: string; status: "pending" | "attending" | "declined" }[];
@@ -155,8 +162,11 @@ export function computeDashboardMetrics(input: DashboardInput): DashboardMetrics
 
   const dietary = [...attendingGuestIds]
     .map((id) => guestById.get(id)!)
-    .filter((g) => g.dietary_restrictions?.trim())
-    .map((g) => ({ guestName: fullName(g), restrictions: g.dietary_restrictions!.trim() }))
+    .map((g) => ({
+      guestName: fullName(g),
+      restrictions: describeDietary(g.dietary_tags ?? [], g.dietary_restrictions),
+    }))
+    .filter((d) => d.restrictions)
     .sort((a, b) => a.guestName.localeCompare(b.guestName));
 
   const qr = { passed: 0, failed: 0, stale: 0, notValidated: 0 };

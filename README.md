@@ -5,9 +5,10 @@ invitation pages with QR codes, and a guest RSVP flow. Guests never create
 accounts — each printed invitation carries a QR code (and a short fallback code)
 that opens their personal RSVP page.
 
-**Status: Phase 1 (foundation + invitation/RSVP vertical slice).** The public
-wedding homepage, visual design, photo uploads, registry, bulk printing,
-wedding-day mode, and gallery are later phases.
+**Status:** foundation, invitation/RSVP system, and the guest-facing site from
+the design handoff (`design/brake-wedding-handoff/`) are built. Content still has
+[bracketed placeholders] in `src/content/site.ts`. Admin redesign, wedding-week
+mode, photo uploads, and bulk printing are later phases.
 
 ## Stack
 
@@ -99,13 +100,15 @@ After setup, sign in at `/admin/login` and:
 ```
 src/
   app/
-    page.tsx                 placeholder home (public site is a later phase)
-    i/[token]/               personalized invitation + RSVP flow (guests)
-    rsvp/                    fallback: type the printed RSVP code
+    (site)/                  public site: home, story, weekend, travel, gallery, registry, faq, rsvp
+    i/[token]/               personalized invitation portal; rsvp/ = the RSVP flow
+    forget-invitation/       "Not you?" (clears the remembered invitation)
     admin/login/             admin sign-in
     admin/(protected)/       all admin pages (layout enforces admin)
       dashboard/ households/ guests/ events/ invitations/ export/
-  components/ui/             small shared UI primitives
+  components/site/           guest-site components (header, event/hotel/registry cards, FAQ)
+  components/ui/             admin UI primitives
+  content/site.ts            ALL website text — fill in the [placeholders] here
   lib/
     supabase/                browser, server, and privileged clients; DB types
     auth/admin.ts            admin authorization

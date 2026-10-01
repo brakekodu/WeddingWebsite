@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guest portal — desktop</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.ph{background:#EFE9F4;border:1px dashed #A493BC;display:flex;align-items:center;justify-content:center;text-align:center;color:#625874;font:13px/1.4 'IBM Plex Mono',monospace;box-sizing:border-box;padding:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:48px;padding:0 24px;background:#6F5A8F;color:#fff;border:2px solid #6F5A8F;border-radius:8px;font:600 15px 'IBM Plex Sans',sans-serif;text-decoration:none}
+.btn:hover{color:#fff;background:#4F3E69}
+.btn2{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;padding:0 18px;background:#fff;color:#2E2638;border:1.5px solid #6F5A8F;border-radius:8px;font:600 14px 'IBM Plex Sans',sans-serif;text-decoration:none}
+.ann{background:#fff3e6;border:1px solid #c2410c;color:#7a2c0c;font:12px/1.5 'IBM Plex Mono',monospace;border-radius:4px;padding:10px 12px;box-sizing:border-box}
+.nav a{text-decoration:none;font-size:15px;min-height:44px;display:inline-flex;align-items:center}
+.h2{margin:0;font-size:32px;font-weight:500}
+.ev{border:1px solid #D3C6E0;border-radius:12px;padding:22px 24px;display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:20px;align-items:start}
+.ev .tm{font:600 16px 'IBM Plex Mono',monospace;padding-top:4px}
+.m{font-size:15px;color:#5E5468;line-height:1.6}
+.side{border:1px solid #D3C6E0;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.ln{display:flex;justify-content:space-between;font-size:15px;min-height:28px;align-items:center}
+.faq{min-height:56px;display:flex;justify-content:space-between;align-items:center;border:0;border-bottom:1px solid #E4DBEC;font:500 16px 'IBM Plex Sans',sans-serif;background:none;padding:0;text-align:left;width:100%;color:#2E2638}
+</style>
+</helmet>
+<div style="width: 1280px; min-height: 2100px; display: flex; flex-direction: column; background: #fff">
+<div style="background: #3B2F4A; color: #fff; padding: 12px 40px; display: flex; gap: 16px; align-items: center; font: 13px 'IBM Plex Mono', monospace"><span>/i/{token}</span><span style="border: 1px dashed #fff; border-radius: 999px; padding: 2px 10px">◐ Personalized</span><span style="color: #DCD2E6">Guest portal · State B (responded) · only this invitation's events and guests</span></div>
+<header style="height: 80px; padding: 0 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E4DBEC">
+<div class="ph" style="width: 104px; height: 40px; padding: 0">[monogram]</div>
+<nav class="nav" aria-label="Main" style="display: flex; gap: 28px; align-items: center">
+<a href="#weekend">Your weekend</a><a href="#travel">Travel &amp; Stay</a><a href="#registry">Registry</a><a href="#faq">FAQ</a><a href="#">Our Story</a>
+<span style="font-size: 14px; border: 1px dashed #5E5468; border-radius: 999px; padding: 6px 14px">◐ Viewing as John &amp; Sarah · <a href="#">Not you?</a></span>
+</nav>
+</header>
+<div style="padding: 64px 96px 40px; display: flex; flex-direction: column; gap: 10px">
+<div class="lbl">[123] days to go · [Saturday, Month Day]</div>
+<h1 class="sf" style="margin: 0; font-size: 56px; font-weight: 500">Welcome back, John &amp; Sarah</h1>
+</div>
+<div style="padding: 0 96px 64px; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 48px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 48px">
+<section id="weekend" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end"><h2 class="sf h2">Your weekend</h2><a class="btn2" href="#">Add all to calendar</a></div>
+<div class="lbl" style="margin-top: 8px">Friday · [Month Day]</div>
+<div class="ev"><span class="tm">7:00 PM</span><div style="display: flex; flex-direction: column; gap: 4px"><span class="sf" style="font-size: 24px">Welcome Party</span><span class="m">[Venue] · [Address]<br>Attending: John, Sarah</span></div><a class="btn2" href="#">Directions ↗</a></div>
+<div class="lbl" style="margin-top: 8px">Saturday · [Month Day]</div>
+<div class="ev"><span class="tm">4:30 PM</span><div style="display: flex; flex-direction: column; gap: 4px"><span class="sf" style="font-size: 24px">Ceremony</span><span class="m">[Venue] · [Address] · Attire: [dress code]<br>Attending: John, Sarah · Shuttle 3:45 PM from [Hotel]</span></div><a class="btn2" href="#">Directions ↗</a></div>
+<div class="ev"><span class="tm">6:00 PM</span><div style="display: flex; flex-direction: column; gap: 4px"><span class="sf" style="font-size: 24px">Reception</span><span class="m">[Venue]<br>Attending: John, Sarah</span></div><a class="btn2" href="#">Directions ↗</a></div>
+<div class="lbl" style="margin-top: 8px">Sunday · [Month Day]</div>
+<div class="ev" style="border-style: dashed"><span class="tm">10:00 AM</span><div style="display: flex; flex-direction: column; gap: 4px"><span class="sf" style="font-size: 24px">Farewell Brunch</span><span class="m">[Venue]<br>✕ John — not attending</span></div><a class="btn2" href="#">Change</a></div>
+</section>
+<section id="travel" style="display: flex; flex-direction: column; gap: 14px">
+<h2 class="sf h2">Travel &amp; hotel</h2>
+<div style="display: grid; grid-template-columns: 260px minmax(0, 1fr); border: 1px solid #D3C6E0; border-radius: 12px; overflow: hidden"><div class="ph" style="height: 200px; border: 0">[hotel photo]</div><div style="padding: 24px; display: flex; flex-direction: column; gap: 8px"><span class="lbl">Room block · closes [date]</span><b style="font-size: 20px">[Hotel A]</b><span class="m">Code [CODE] · shuttle stop for Saturday</span><div style="display: flex; gap: 10px; margin-top: 6px"><a class="btn" href="#">Book your room ↗</a><a class="btn2" href="D-Travel.dc.html">All travel info</a></div></div></div>
+</section>
+<section id="registry" style="display: flex; justify-content: space-between; align-items: center; gap: 24px; background: #FBF8F2; border-radius: 12px; padding: 32px">
+<div style="display: flex; flex-direction: column; gap: 6px"><h2 class="sf h2" style="font-size: 26px">Registry</h2><span class="m">[Your presence is the greatest gift…]</span></div><a class="btn2" href="D-Registry.dc.html">View registry</a>
+</section>
+<section id="faq" style="display: flex; flex-direction: column; gap: 8px">
+<h2 class="sf h2">Questions</h2>
+<div><button class="faq" aria-expanded="false">What should we wear? <span aria-hidden="true">+</span></button><button class="faq" aria-expanded="false">Is there parking at the venue? <span aria-hidden="true">+</span></button><button class="faq" aria-expanded="false">Can we change our RSVP? <span aria-hidden="true">+</span></button></div>
+</section>
+</div>
+<aside style="display: flex; flex-direction: column; gap: 16px">
+<div class="side" style="border: 2px solid #6F5A8F">
+<div style="display: flex; justify-content: space-between"><span class="lbl">Your RSVP</span><span style="font-size: 13px; color: #5E5468">Sent Sep 30</span></div>
+<div class="ln"><b>John Smith</b><span>✓ Attending</span></div>
+<div class="ln"><b>Sarah Smith</b><span>✓ Attending</span></div>
+<a class="btn" href="D-RSVP.dc.html" style="margin-top: 6px">Edit RSVP</a>
+<span style="font-size: 13px; color: #5E5468; text-align: center">Changes allowed until [RSVP deadline]</span>
+</div>
+<div class="side">
+<span class="lbl">Your dinner</span>
+<div class="ln"><span>John</span><span>[Beef entrée]</span></div>
+<div class="ln"><span>Sarah</span><span>[Chicken entrée]</span></div>
+<div style="font-size: 14px; color: #5E5468">Dietary: Sarah — gluten-free</div>
+</div>
+<div class="side">
+<span class="lbl">Questions?</span>
+<span class="m">Email [couple email]<br>Wedding-week contact: [coordinator]</span>
+</div>
+<div class="ann">Sidebar is sticky on desktop. On mobile it stacks: RSVP card first, then schedule. Same token page morphs into Wedding-week mode (see mobile) — "Next up" card replaces the greeting.</div>
+</aside>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

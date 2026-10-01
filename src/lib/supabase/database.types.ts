@@ -33,6 +33,8 @@ export type GuestRow = {
   email: string | null;
   phone: string | null;
   dietary_restrictions: string | null;
+  /** Subset of DIETARY_TAGS (src/lib/rsvp/dietary.ts). */
+  dietary_tags: string[];
   plus_one_allowed: boolean;
   plus_one_of: string | null;
   notes: string | null;
@@ -48,6 +50,8 @@ export type EventRow = {
   time_zone: string | null;
   location_name: string | null;
   location_address: string | null;
+  attire: string | null;
+  guest_notes: string | null;
   rsvp_required: boolean;
   meal_selection_required: boolean;
   visibility: Database["public"]["Enums"]["event_visibility"];
@@ -82,6 +86,10 @@ export type InvitationRow = {
   validated_url: string | null;
   validation_details: Json | null;
   notes: string | null;
+  /** Guest-provided at RSVP review (optional). */
+  contact_email: string | null;
+  /** Guest-provided note to the couple (optional). */
+  guest_message: string | null;
 } & Timestamps;
 
 export type InvitationGuestRow = {
@@ -114,6 +122,14 @@ export type RsvpActivityRow = {
   occurred_at: string;
 };
 
+export type WeddingSettingsRow = {
+  id: boolean;
+  /** "YYYY-MM-DD"; last day to RSVP (inclusive, venue time). */
+  rsvp_deadline: string | null;
+  time_zone: string;
+  updated_at: string;
+};
+
 export type AdminUserRow = { user_id: string; email: string; created_at: string };
 
 /** Insert shape: columns with defaults (and generated values) become optional. */
@@ -131,6 +147,12 @@ export type Database = {
   __InternalSupabase: { PostgrestVersion: "13" };
   public: {
     Tables: {
+      wedding_settings: {
+        Row: WeddingSettingsRow;
+        Insert: Partial<WeddingSettingsRow>;
+        Update: Partial<WeddingSettingsRow>;
+        Relationships: [];
+      };
       admin_users: {
         Row: AdminUserRow;
         Insert: InsertOf<AdminUserRow, "user_id" | "email">;
@@ -219,6 +241,7 @@ export type Database = {
     Views: { [_ in never]: never };
     Functions: {
       get_invitation: { Args: { p_token: string }; Returns: Json };
+      get_public_site: { Args: Record<string, never>; Returns: Json };
       record_rsvp_started: { Args: { p_token: string }; Returns: undefined };
       submit_rsvp: { Args: { p_token: string; p_payload: Json }; Returns: Json };
       resolve_rsvp_code: { Args: { p_code: string }; Returns: Json };
@@ -231,7 +254,7 @@ export type Database = {
       rsvp_status: "pending" | "attending" | "declined";
       rsvp_activity_type: "invitation_accessed" | "rsvp_started" | "rsvp_completed" | "rsvp_updated";
       activity_actor: "guest" | "admin";
-      event_visibility: "public" | "invited_only";
+      event_visibility: "public" | "invited_only" | "draft";
     };
     CompositeTypes: { [_ in never]: never };
   };

@@ -245,6 +245,21 @@ export default async function InvitationPage(props: PageProps<"/admin/invitation
             )}
           </section>
 
+          {(invitation.guest_message || invitation.contact_email) && (
+            <section className={ui.card}>
+              <h2 className={`${ui.h2} mb-3`}>From the guests</h2>
+              {invitation.guest_message && <p className="whitespace-pre-line">“{invitation.guest_message}”</p>}
+              {invitation.contact_email && (
+                <p className="mt-2 text-sm text-stone-600">
+                  Email for updates:{" "}
+                  <a href={`mailto:${invitation.contact_email}`} className={ui.link}>
+                    {invitation.contact_email}
+                  </a>
+                </p>
+              )}
+            </section>
+          )}
+
           <section className={ui.card}>
             <h2 className={`${ui.h2} mb-3`}>Activity</h2>
             {activity.length === 0 ? (

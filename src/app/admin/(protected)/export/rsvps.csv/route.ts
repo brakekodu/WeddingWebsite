@@ -1,6 +1,7 @@
 import { getAdmin } from "@/lib/auth/admin";
 import { toCsv } from "@/lib/csv";
 import { formatRsvpCode } from "@/lib/invitations/credentials";
+import { describeDietary } from "@/lib/rsvp/dietary";
 
 /** One row per (guest, assigned event) for guests on active invitations. Admin only. */
 export async function GET() {
@@ -9,7 +10,9 @@ export async function GET() {
   const { supabase } = admin;
 
   const [guests, events, assignments, rsvps, meals, links] = await Promise.all([
-    supabase.from("guests").select("id, first_name, last_name, dietary_restrictions, households(display_name)"),
+    supabase
+      .from("guests")
+      .select("id, first_name, last_name, dietary_restrictions, dietary_tags, households(display_name)"),
     supabase.from("events").select("id, name, rsvp_required").order("display_order"),
     supabase.from("guest_events").select("guest_id, event_id"),
     supabase.from("rsvps").select("guest_id, event_id, status, updated_at"),
@@ -54,7 +57,7 @@ export async function GET() {
       event.name,
       event.rsvp_required ? (rsvp?.status ?? "pending") : "no rsvp needed",
       mealByPair.get(`${a.guest_id}:${a.event_id}`) ?? "",
-      guest.dietary_restrictions ?? "",
+      describeDietary(guest.dietary_tags, guest.dietary_restrictions),
       codeByGuest.get(a.guest_id),
       rsvp?.updated_at ?? "",
     ]);

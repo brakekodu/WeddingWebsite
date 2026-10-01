@@ -9,7 +9,27 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+/** Same value as INVITE_COOKIE in src/lib/site/server.ts (proxy code stays self-contained). */
+const INVITE_COOKIE = "bw_invite";
+const INVITATION_PATH = /^\/i\/([A-Za-z0-9_-]{24})(\/|$)/;
+
 export async function proxy(request: NextRequest) {
+  const response = await handle(request);
+  // Remember the invitation on this device so public pages can show "Viewing as …".
+  const token = request.nextUrl.pathname.match(INVITATION_PATH)?.[1];
+  if (token && request.cookies.get(INVITE_COOKIE)?.value !== token) {
+    response.cookies.set(INVITE_COOKIE, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: request.nextUrl.protocol === "https:",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 400,
+    });
+  }
+  return response;
+}
+
+async function handle(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isAdminArea = pathname === "/admin" || pathname.startsWith("/admin/");
   const isLogin = pathname === "/admin/login";

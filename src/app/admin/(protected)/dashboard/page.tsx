@@ -14,7 +14,7 @@ export default async function DashboardPage() {
       supabase.from("households").select("id", { count: "exact", head: true }),
       supabase.from("invitations").select("id, status, token, qr_validation_status, validated_url"),
       supabase.from("invitation_guests").select("invitation_id, guest_id"),
-      supabase.from("guests").select("id, first_name, last_name, dietary_restrictions"),
+      supabase.from("guests").select("id, first_name, last_name, dietary_restrictions, dietary_tags"),
       supabase.from("events").select("id, name, rsvp_required, meal_selection_required").order("display_order"),
       supabase.from("guest_events").select("guest_id, event_id"),
       supabase.from("rsvps").select("guest_id, event_id, status"),

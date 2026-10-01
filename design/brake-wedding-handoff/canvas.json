@@ -1,0 +1,357 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "A-Dashboard.dc.html": {
+      "h": 1640,
+      "page": "admin",
+      "title": "Admin · Dashboard  /admin",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "A-Events.dc.html": {
+      "h": 1240,
+      "page": "admin",
+      "title": "Admin · Events  /admin/events",
+      "w": 1440,
+      "x": 3040,
+      "y": 2040
+    },
+    "A-Guests.dc.html": {
+      "h": 1160,
+      "page": "admin",
+      "title": "Admin · Guests  /admin/guests",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "A-Households.dc.html": {
+      "h": 1160,
+      "page": "admin",
+      "title": "Admin · Households  /admin/households",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "A-InvitationDetail.dc.html": {
+      "h": 1400,
+      "page": "admin",
+      "title": "Admin · Invitation detail  /admin/invitations/{id}",
+      "w": 1440,
+      "x": 1520,
+      "y": 2040
+    },
+    "A-Invitations.dc.html": {
+      "h": 1240,
+      "page": "admin",
+      "title": "Admin · Invitations  /admin/invitations",
+      "w": 1440,
+      "x": 0,
+      "y": 2040
+    },
+    "Components.dc.html": {
+      "h": 2760,
+      "page": "system",
+      "title": "Component inventory",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "D-Home.dc.html": {
+      "h": 3200,
+      "page": "desktop",
+      "title": "Home  /",
+      "w": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "D-Portal.dc.html": {
+      "h": 2100,
+      "page": "desktop",
+      "title": "Guest portal  /i/{token}",
+      "w": 1280,
+      "x": 5440,
+      "y": 0
+    },
+    "D-RSVP.dc.html": {
+      "h": 1200,
+      "page": "desktop",
+      "title": "RSVP (event step)  /i/{token}/rsvp",
+      "w": 1280,
+      "x": 6800,
+      "y": 0
+    },
+    "D-Registry.dc.html": {
+      "h": 1300,
+      "page": "desktop",
+      "title": "Registry  /registry",
+      "w": 1280,
+      "x": 4080,
+      "y": 0
+    },
+    "D-Travel.dc.html": {
+      "h": 2200,
+      "page": "desktop",
+      "title": "Travel & Stay  /travel",
+      "w": 1280,
+      "x": 2720,
+      "y": 0
+    },
+    "D-Weekend.dc.html": {
+      "h": 1900,
+      "page": "desktop",
+      "title": "Wedding Weekend  /weekend",
+      "w": 1280,
+      "x": 1360,
+      "y": 0
+    },
+    "Flows.dc.html": {
+      "h": 1640,
+      "page": "arch",
+      "title": "User flows",
+      "w": 2480,
+      "x": 1920,
+      "y": 0
+    },
+    "M-Attendance.dc.html": {
+      "h": 1000,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "M2 · Who's attending",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "M-Code.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "RSVP code fallback  /rsvp (error state)",
+      "w": 390,
+      "x": 1410,
+      "y": 1640
+    },
+    "M-Confirm.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "M7 · Confirmation",
+      "w": 390,
+      "x": 2820,
+      "y": 0
+    },
+    "M-Dietary.dc.html": {
+      "h": 1100,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "M5 · Dietary (optional)",
+      "w": 390,
+      "x": 1880,
+      "y": 0
+    },
+    "M-Events.dc.html": {
+      "h": 1240,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "M3 · Event RSVP",
+      "w": 390,
+      "x": 940,
+      "y": 0
+    },
+    "M-Home.dc.html": {
+      "h": 2700,
+      "page": "mobile",
+      "title": "Public home — mobile",
+      "w": 390,
+      "x": 0,
+      "y": 1640
+    },
+    "M-Invite.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "M1 · Invitation landing  /i/{token}",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "M-Meals.dc.html": {
+      "h": 1100,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "M4 · Meal selection",
+      "w": 390,
+      "x": 1410,
+      "y": 0
+    },
+    "M-Portal.dc.html": {
+      "h": 2100,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "Returning guest portal  /i/{token}",
+      "w": 390,
+      "x": 470,
+      "y": 1640
+    },
+    "M-Review.dc.html": {
+      "h": 1240,
+      "is_interactive": true,
+      "page": "mobile",
+      "title": "M6 · Review",
+      "w": 390,
+      "x": 2350,
+      "y": 0
+    },
+    "M-WeekMode.dc.html": {
+      "h": 1700,
+      "page": "mobile",
+      "title": "Wedding-week mode  /i/{token}",
+      "w": 390,
+      "x": 940,
+      "y": 1640
+    },
+    "Main.dc.html": {
+      "h": 1640,
+      "page": "arch",
+      "title": "Sitemap",
+      "w": 1840,
+      "x": 0,
+      "y": 0
+    },
+    "Questions.dc.html": {
+      "h": 2500,
+      "page": "system",
+      "title": "Open UX questions & architecture checks",
+      "w": 1280,
+      "x": 1520,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-01T16:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "page": "arch",
+    "view": "canvas"
+  },
+  "notes": {
+    "t_adm1": {
+      "kind": "title1",
+      "maxW": 4480,
+      "page": "admin",
+      "text": "Admin — know who's coming at a glance",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "t_adm2": {
+      "kind": "title1",
+      "maxW": 4480,
+      "page": "admin",
+      "text": "Admin — invitations, QR safety & events",
+      "w": 240,
+      "x": 0,
+      "y": 1740
+    },
+    "t_arch": {
+      "kind": "title1",
+      "maxW": 4400,
+      "page": "arch",
+      "text": "Information architecture & user flows",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "t_desk": {
+      "kind": "title1",
+      "maxW": 8000,
+      "page": "desktop",
+      "text": "Public site & personalized guest portal — desktop",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "t_mob1": {
+      "kind": "title1",
+      "maxW": 3210,
+      "page": "mobile",
+      "text": "RSVP flow — mobile first (press Play to click through)",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "t_mob2": {
+      "kind": "title1",
+      "maxW": 1800,
+      "page": "mobile",
+      "text": "Public home, returning guest, wedding week & code fallback",
+      "w": 240,
+      "x": 0,
+      "y": 1340
+    },
+    "t_sys": {
+      "kind": "title1",
+      "maxW": 2800,
+      "page": "system",
+      "text": "Components & decisions for the couple",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Flows.dc.html",
+    "M-Invite.dc.html",
+    "M-Attendance.dc.html",
+    "M-Events.dc.html",
+    "M-Meals.dc.html",
+    "M-Dietary.dc.html",
+    "M-Review.dc.html",
+    "M-Confirm.dc.html",
+    "M-Home.dc.html",
+    "M-Portal.dc.html",
+    "M-WeekMode.dc.html",
+    "M-Code.dc.html",
+    "D-Home.dc.html",
+    "D-Weekend.dc.html",
+    "D-Travel.dc.html",
+    "D-Registry.dc.html",
+    "D-Portal.dc.html",
+    "D-RSVP.dc.html",
+    "A-Dashboard.dc.html",
+    "A-Guests.dc.html",
+    "A-Households.dc.html",
+    "A-Invitations.dc.html",
+    "A-InvitationDetail.dc.html",
+    "A-Events.dc.html",
+    "Components.dc.html",
+    "Questions.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "arch",
+      "name": "1 · Sitemap & flows"
+    },
+    {
+      "id": "mobile",
+      "name": "2 · Guest — mobile"
+    },
+    {
+      "id": "desktop",
+      "name": "3 · Public & guest — desktop"
+    },
+    {
+      "id": "admin",
+      "name": "4 · Admin — desktop"
+    },
+    {
+      "id": "system",
+      "name": "5 · Components & open questions"
+    }
+  ],
+  "title": "Brake Wedding — IA & Wireframes"
+}

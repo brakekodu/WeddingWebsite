@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>User flows</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid #8E7BAA;border-radius:999px;padding:2px 10px;font:500 12px/18px 'IBM Plex Sans',sans-serif;white-space:nowrap;background:#fff}
+.ann{background:#fff3e6;border:1px solid #c2410c;color:#7a2c0c;font:12px/1.5 'IBM Plex Mono',monospace;border-radius:4px;padding:10px 12px;box-sizing:border-box}
+.st{flex:1 1 0;min-width:0;border:1px solid #D3C6E0;border-radius:10px;background:#fff;padding:14px;display:flex;flex-direction:column;gap:6px;box-sizing:border-box}
+.st .k{font:600 12px 'IBM Plex Mono',monospace;color:#5E5468}
+.st .n{font-weight:600;font-size:16px;line-height:1.3}
+.st .r{font:12px 'IBM Plex Mono',monospace;color:#5E5468}
+.st .d{font-size:13px;line-height:1.45;color:#4A4056}
+.st .s{font:11.5px/1.45 'IBM Plex Mono',monospace;color:#7a2c0c;background:#fff3e6;border-radius:4px;padding:6px 8px;margin-top:auto}
+.ch{flex:0 0 24px;display:flex;align-items:center;justify-content:center;font-size:28px;color:#8E7BAA}
+.row{display:flex;align-items:stretch;gap:12px}
+.br{border:1px dashed #8E7BAA;border-radius:8px;padding:12px 14px;font-size:13px;line-height:1.45;background:#FBF8F2;flex:1 1 0;min-width:0}
+.br b{display:block;margin-bottom:4px}
+</style>
+</helmet>
+<div style="width: 2480px; min-height: 1640px; box-sizing: border-box; padding: 64px; display: flex; flex-direction: column; gap: 48px; background: #F1EAF6">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div class="lbl">Brake Wedding · Deliverables 2–4</div>
+<h1 class="sf" style="margin: 0; font-size: 48px; font-weight: 500">User flows</h1>
+<p style="margin: 0; font-size: 16px; color: #5E5468; max-width: 900px; line-height: 1.5">Target: QR scan to submitted RSVP in 1–2 minutes, on a phone, with zero typing for a couple who are both attending and have no dietary needs (tap-only path ≈ 9 taps).</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 12px"><span class="tag">◐ Personalized</span><h2 class="sf" style="margin: 0; font-size: 28px; font-weight: 500">Flow 2 — RSVP: QR scan to personalized portal</h2></div>
+<div class="row">
+<div class="st"><span class="k">0</span><span class="n">Scan QR on invitation</span><span class="r">camera → /i/{token}</span><span class="d">Phone camera opens the link. No app, no login, no code.</span><span class="s">Token resolves → invitation + household + guests + per-guest event list</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">M1</span><span class="n">Welcome landing</span><span class="r">/i/{token}</span><span class="d">"Welcome, John &amp; Sarah" · date · venue · respond-by date · Begin RSVP</span><span class="s">If already responded → skip to portal (Flow 3)</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">M2 · step 1/5</span><span class="n">Who's attending?</span><span class="r">/rsvp?step=attendance</span><span class="d">One card per guest: Accept / Decline. Plus-one name if allowed.</span><span class="s">Writes guest-level attending flag</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">M3 · step 2/5</span><span class="n">Event RSVP</span><span class="r">/rsvp?step=events</span><span class="d">Only events each guest is invited to; only guests who accepted. Yes / No per guest per event.</span><span class="s">Writes one response per guest × event</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">M4 · step 3/5</span><span class="n">Meal selection*</span><span class="r">/rsvp?step=meals</span><span class="d">Per guest attending a meal event. Option cards, not a dropdown.</span><span class="s">*Skipped when no attended event requires a meal</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">M5 · step 4/5</span><span class="n">Dietary (optional)</span><span class="r">/rsvp?step=dietary</span><span class="d">Chips + free text per guest; optional note to the couple. "Skip" is equal weight.</span><span class="s">Dietary stored per guest, not per meal</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">M6 · step 5/5</span><span class="n">Review</span><span class="r">/rsvp?step=review</span><span class="d">Guests · Events · Meals · Dietary, each with Edit. Optional email for confirmation. Submit RSVP.</span><span class="s">Nothing is saved until Submit (draft kept on device)</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">M7</span><span class="n">Confirmation</span><span class="r">/i/{token}?done</span><span class="d">"You're all set!" · summary · Add to calendar · View your wedding weekend</span><span class="s">Decline-all variant: "We'll miss you" + registry</span></div>
+<div class="ch">›</div>
+<div class="st" style="border: 2px solid #6F5A8F"><span class="k">Portal</span><span class="n">Your wedding weekend</span><span class="r">/i/{token}</span><span class="d">Same link now opens the personalized portal (Flow 3).</span><span class="s">State B</span></div>
+</div>
+<div class="row">
+<div class="br"><b>Fallback entry</b>/rsvp → enter 6-char code → same /i/{token} landing. Codes avoid 0/O/1/I. Rate-limited; never searchable by name.</div>
+<div class="br"><b>Everyone declines</b>M2 → straight to Review (events, meals, dietary skipped) → "We'll miss you" confirmation.</div>
+<div class="br"><b>Partial household</b>Sarah declines → she disappears from M3–M5; John continues alone. Review lists Sarah as "Not attending".</div>
+<div class="br"><b>Back / leave mid-way</b>Back keeps answers. Answers held as a local draft; returning to the link resumes at the last step.</div>
+<div class="br"><b>Validation errors</b>"Continue" stays enabled; tapping it scrolls to the first unanswered guest with a text message, not just a red outline.</div>
+<div class="br"><b>Submit fails / offline</b>Button shows "Sending…"; on failure: "We couldn't save your RSVP — your answers are still here. Try again."</div>
+<div class="br"><b>Invalid or revoked link</b>"We couldn't open that invitation" → code entry + couple's contact. Never reveals whose link it was.</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 12px"><span class="tag">◐ Personalized</span><h2 class="sf" style="margin: 0; font-size: 28px; font-weight: 500">Flow 3 — Returning guest</h2></div>
+<div class="row">
+<div class="st" style="flex-grow: 0.8"><span class="k">0</span><span class="n">Scan the same QR (or bookmarked link)</span><span class="r">/i/{token}</span><span class="d">Months later, the printed invitation still works.</span></div>
+<div class="ch">›</div>
+<div class="st" style="flex-grow: 0.8"><span class="k">Check</span><span class="n">Which state?</span><span class="d">Not responded → M1 landing<br>Responded → Portal<br>Wedding week → Week mode<br>After deadline → read-only RSVP</span><span class="s">Driven by RSVP status + dates set in Settings</span></div>
+<div class="ch">›</div>
+<div class="st" style="flex-grow: 0.8; border: 2px solid #6F5A8F"><span class="k">Portal</span><span class="n">Welcome back, John &amp; Sarah</span><span class="d">RSVP summary with status words + icons · quick links</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">Schedule</span><span class="n">Your weekend</span><span class="d">Only invited events · who in the party is attending each · time, venue, Directions (opens maps), Add to calendar</span></div>
+<div class="st"><span class="k">RSVP</span><span class="n">Edit RSVP</span><span class="d">Re-enters the flow at Review with answers prefilled; jump to any step. Disabled after deadline.</span><span class="s">Edits logged for admin activity feed</span></div>
+<div class="st"><span class="k">Travel</span><span class="n">Travel &amp; hotel</span><span class="d">Room block card first (deadline), then transport. Public page with "Viewing as" pill.</span></div>
+<div class="st"><span class="k">Registry</span><span class="n">Registry</span><span class="d">External links open in a new tab; portal stays in place.</span></div>
+<div class="st"><span class="k">Week mode</span><span class="n">Next event first</span><span class="d">Countdown card · directions · announcements · upload photos (after ceremony)</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 12px"><span class="tag" style="background: #6F5A8F; color: #fff; border-color: #6F5A8F">● Admin</span><h2 class="sf" style="margin: 0; font-size: 28px; font-weight: 500">Flow 4 — Admin: household to mass print</h2></div>
+<div class="row">
+<div class="st"><span class="k">1</span><span class="n">Create household</span><span class="r">/admin/households/new</span><span class="d">Display name ("John &amp; Sarah Smith"), mailing address, email, phone</span><span class="s">Or bulk: Import CSV</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">2</span><span class="n">Add guests</span><span class="d">First/last name, adult / child, plus-one placeholder ("Guest of John")</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">3</span><span class="n">Assign events</span><span class="d">Guest × event checkbox grid. "Apply to whole household" shortcut.</span><span class="s">Per guest, never only per household</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">4</span><span class="n">Generate invitation</span><span class="r">/admin/invitations</span><span class="d">Creates token + fallback code. Status: Generated.</span><span class="s">Token never changes once printed</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">5</span><span class="n">Generate QR</span><span class="d">QR encodes the full URL. Rendered into the print file.</span></div>
+<div class="ch">›</div>
+<div class="st" style="border: 2px solid #6F5A8F"><span class="k">6</span><span class="n">Validate</span><span class="d">Automated checklist: resolves to this household, URL live over HTTPS, QR decodes to exact URL, code unique, every guest has ≥1 event.</span><span class="s">Fail → stays here with the reason</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">7</span><span class="n">Test print</span><span class="d">Print one card, scan it with a phone, confirm "Welcome, John &amp; Sarah" appears.</span><span class="s">Manual check box records who/when</span></div>
+<div class="ch">›</div>
+<div class="st"><span class="k">8</span><span class="n">Lock</span><span class="d">Freezes token, code and print layout. Guests/events can still change (they don't alter the QR).</span></div>
+<div class="ch">›</div>
+<div class="st" style="border: 2px solid #6F5A8F"><span class="k">9</span><span class="n">Mass print / export</span><span class="d">Print-ready PDF or CSV for a stationer. Status → Printed.</span><span class="s">Blocked if any selected invitation is not Validated + Locked</span></div>
+</div>
+<div class="row">
+<div class="br"><b>Validation fails</b>Invitation returns to "Needs attention" with the failing check named in plain words and a Fix action.</div>
+<div class="br"><b>Change after lock</b>Adding a guest or event is allowed and re-runs validation silently. Changing the household or token requires Unlock + reprint warning.</div>
+<div class="br"><b>Bulk generate</b>"Generate invitations" creates one per household without one; summary modal: 12 created, 1 skipped (no guests).</div>
+<div class="br"><b>Print blocked</b>Print all → modal: "11 invitations aren't ready" with list + "Print the 85 ready ones" / "Fix first".</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":2480,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

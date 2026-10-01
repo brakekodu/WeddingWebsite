@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sitemap</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.mono{font-family:'IBM Plex Mono',monospace}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid #8E7BAA;border-radius:999px;padding:2px 10px;font:500 12px/18px 'IBM Plex Sans',sans-serif;white-space:nowrap;background:#fff}
+.ann{background:#fff3e6;border:1px solid #c2410c;color:#7a2c0c;font:12px/1.5 'IBM Plex Mono',monospace;border-radius:4px;padding:10px 12px;box-sizing:border-box}
+.rc{border:1px solid #D3C6E0;border-radius:8px;background:#fff;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.rc .r{font:500 12px 'IBM Plex Mono',monospace;color:#5E5468}
+.rc .n{font-weight:600;font-size:16px}
+.rc .d{font-size:13px;line-height:1.45;color:#5E5468}
+.sub{margin-left:28px}
+.hd{border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+</style>
+</helmet>
+<div style="width: 1840px; min-height: 1640px; box-sizing: border-box; padding: 64px; display: flex; flex-direction: column; gap: 40px; background: #F1EAF6">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div class="lbl">Brake Wedding · Deliverable 1</div>
+<h1 class="sf" style="margin: 0; font-size: 48px; font-weight: 500">Complete sitemap</h1>
+<p style="margin: 0; font-size: 16px; color: #5E5468; max-width: 760px; line-height: 1.5">Three experiences, one product. The public site is the front door, the personalized portal is the heart of the guest experience, and the admin portal is the couple's command center.</p>
+</div>
+<div style="display: flex; gap: 12px; align-items: center">
+<span class="lbl">Access key</span>
+<span class="tag">○ Public — anyone</span>
+<span class="tag">◐ Personalized — invitation token</span>
+<span class="tag" style="background: #6F5A8F; color: #fff; border-color: #6F5A8F">● Admin — signed in</span>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; align-items: start">
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div class="hd" style="background: #fff; border: 2px solid #6F5A8F">
+<span class="tag" style="align-self: flex-start">○ Public</span>
+<div class="sf" style="font-size: 26px">Public wedding website</div>
+<div style="font-size: 14px; color: #5E5468; line-height: 1.5">No login. Shows public events only. Primary nav: 6 links + RSVP button.</div>
+</div>
+<div class="rc"><span class="r">/</span><span class="n">Home</span><span class="d">Hero + countdown · Welcome · Story preview · Weekend preview (public events) · Travel preview · Gallery strip · Registry · FAQ preview · RSVP CTA</span></div>
+<div class="rc"><span class="r">/story</span><span class="n">Our Story</span><span class="d">How we met · Proposal · <b>Wedding Party</b> as a section (merged — not its own nav item)</span></div>
+<div class="rc"><span class="r">/weekend</span><span class="n">Wedding Weekend</span><span class="d">Public events by day · Dress code · Weather · "Invited to more? Open your invitation"</span></div>
+<div class="rc"><span class="r">/travel</span><span class="n">Travel &amp; Stay</span><span class="d">Where to stay (room blocks) · Getting there · Getting around / shuttles · Things to do</span></div>
+<div class="rc"><span class="r">/gallery</span><span class="n">Gallery</span><span class="d">Engagement photos now · Guest uploads after the wedding (moderated)</span></div>
+<div class="rc"><span class="r">/registry</span><span class="n">Registry</span><span class="d">Cards linking out to external registries + honeymoon fund</span></div>
+<div class="rc"><span class="r">/faq</span><span class="n">FAQ</span><span class="d">Grouped accordion: RSVP · Attire · Kids &amp; plus-ones · Travel · Day-of</span></div>
+<div class="rc" style="border: 2px solid #6F5A8F"><span class="r">/rsvp</span><span class="n">RSVP — find your invitation</span><span class="d">Fallback code entry → resolves to the guest's own /i/{token}. Never a name search.</span></div>
+<div class="rc" style="background: #EDE4F4"><span class="r">/404 · /i/invalid</span><span class="n">Utility states</span><span class="d">Page not found · "We couldn't open that invitation" → code entry + contact</span></div>
+<div class="ann">Nav decision: Our Story + Wedding Party merged; Home holds previews of every page so most visitors never need the nav. No dropdowns.</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div class="hd" style="background: #fff; border: 2px dashed #2E2638">
+<span class="tag" style="align-self: flex-start">◐ Personalized</span>
+<div class="sf" style="font-size: 26px">Guest invitation &amp; portal</div>
+<div style="font-size: 14px; color: #5E5468; line-height: 1.5">Entered via QR (/i/{token}) or code (/rsvp). No account. One URL whose content changes with RSVP state and date.</div>
+</div>
+<div class="rc" style="border: 2px solid #6F5A8F"><span class="r">/i/{token}</span><span class="n">Invitation home (state-driven)</span><span class="d">The same printed QR shows the right thing for the moment:</span></div>
+<div class="rc sub"><span class="r">State A · not responded</span><span class="n">Welcome landing</span><span class="d">"Welcome, John &amp; Sarah" · date · deadline · Begin RSVP</span></div>
+<div class="rc sub"><span class="r">/i/{token}/rsvp</span><span class="n">RSVP flow (5 steps + done)</span><span class="d">1 Attendance → 2 Events → 3 Meals* → 4 Dietary (optional) → 5 Review → Confirmation. *Only if an attended event requires a meal.</span></div>
+<div class="rc sub"><span class="r">State B · responded</span><span class="n">Guest portal</span><span class="d">Your RSVP + Edit · Your weekend (only invited events) · Your meals · Travel · Registry · FAQ</span></div>
+<div class="rc sub"><span class="r">State C · wedding week (date-driven)</span><span class="n">Wedding-week mode</span><span class="d">Next event first · Announcements · Transport · Full schedule · Photo upload</span></div>
+<div class="rc sub"><span class="r">State D · after RSVP deadline</span><span class="n">Read-only RSVP</span><span class="d">Answers shown, Edit replaced by "Need a change? Contact us"</span></div>
+<div class="rc sub"><span class="r">/i/{token}/photos · later</span><span class="n">Upload photos</span><span class="d">Opens on wedding day; uploads tagged to household</span></div>
+<div class="rc" style="background: #EDE4F4"><span class="r">public pages, viewed with a token</span><span class="n">Travel · Registry · FAQ · Gallery</span><span class="d">Reuse public pages; a "Viewing as John &amp; Sarah" pill keeps the way back to the portal. Weekend page swaps in the personal schedule.</span></div>
+<div class="ann">Privacy rule: invite-only events render ONLY inside /i/{token} for guests invited to them — never in public HTML, search, or shared links of other households.</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div class="hd" style="background: #6F5A8F; color: #fff">
+<span class="tag" style="align-self: flex-start">● Admin</span>
+<div class="sf" style="font-size: 26px">Couple admin portal</div>
+<div style="font-size: 14px; color: #DCD2E6; line-height: 1.5">Signed-in couple (+ optional planner). Desktop first; works on tablet and phone.</div>
+</div>
+<div class="rc"><span class="r">/admin/login</span><span class="n">Sign in</span><span class="d">Email magic link or passkey</span></div>
+<div class="rc"><span class="r">/admin</span><span class="n">Dashboard</span><span class="d">Metrics · RSVP progress · Needs attention · Event attendance · Meals · Dietary · Invitation &amp; QR health · Activity</span></div>
+<div class="rc"><span class="r">/admin/guests</span><span class="n">Guests</span><span class="d">Searchable table · filters · detail drawer · record RSVP on a guest's behalf</span></div>
+<div class="rc"><span class="r">/admin/households</span><span class="n">Households</span><span class="d">List + detail: members, contact, guest × event invitations, plus-ones</span></div>
+<div class="rc"><span class="r">/admin/invitations</span><span class="n">Invitations</span><span class="d">Generate · Validate all · Print / Export all (blocked until validated)</span></div>
+<div class="rc sub"><span class="r">/admin/invitations/{id}</span><span class="n">Invitation detail</span><span class="d">QR panel · code · URL · validation checklist · test print · lock</span></div>
+<div class="rc"><span class="r">/admin/events</span><span class="n">Events</span><span class="d">Configurable events · visibility (public / invite-only) · meal options · counts · guest list</span></div>
+<div class="rc"><span class="r">/admin/responses</span><span class="n">Responses</span><span class="d">Tabs: Activity · By event · Meals · Dietary · Exports for caterer &amp; venue. <b>Merges the proposed "RSVPs" and "Meals" items.</b></span></div>
+<div class="rc" style="background: #EDE4F4"><span class="r">/admin/photos · later</span><span class="n">Photos</span><span class="d">Moderate guest uploads before they reach /gallery</span></div>
+<div class="rc"><span class="r">/admin/settings</span><span class="n">Settings</span><span class="d">Wedding details · RSVP deadline · Wedding-week dates · Announcements · Site content · Admin users</span></div>
+<div class="ann">Admin nav: 8 items (Dashboard, Guests, Households, Invitations, Events, Responses, Photos, Settings). Meals live in Responses + Events, not their own page.</div>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1840,"height":1640}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

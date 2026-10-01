@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Find your invitation</title>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Serif:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2E2638;background:#fff}
+a{color:#2E2638}a:hover{color:#4F3E69}
+.sf{font-family:'IBM Plex Serif',Georgia,serif}
+.lbl{font:500 11px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5E5468}
+.ph{background:#EFE9F4;border:1px dashed #A493BC;display:flex;align-items:center;justify-content:center;text-align:center;color:#625874;font:12px/1.4 'IBM Plex Mono',monospace;box-sizing:border-box;padding:8px}
+.btn{display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:52px;padding:0 24px;background:#6F5A8F;color:#fff;border:2px solid #6F5A8F;border-radius:8px;font:600 16px 'IBM Plex Sans',sans-serif;text-decoration:none}
+.btn:hover{color:#fff;background:#4F3E69}
+</style>
+</helmet>
+<div style="width: 390px; height: 900px; display: flex; flex-direction: column; background: #fff">
+<div style="height: 56px; padding: 0 8px 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E4DBEC">
+<a href="M-Home.dc.html" aria-label="Home" style="text-decoration: none"><div class="ph" style="width: 72px; height: 32px; padding: 0">[monogram]</div></a>
+<button aria-label="Open menu" style="width: 44px; height: 44px; border: 0; background: none; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6F5A8F" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+</div>
+<div style="padding: 36px 20px; display: flex; flex-direction: column; gap: 20px; flex-grow: 1">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div class="lbl">RSVP</div>
+<h1 class="sf" style="margin: 0; font-size: 32px; font-weight: 500; line-height: 1.15">Find your invitation</h1>
+<p style="margin: 0; font-size: 15px; color: #5E5468; line-height: 1.5">Enter the 6-character code printed on the back of your invitation.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="code" style="font-weight: 600; font-size: 15px">RSVP code</label>
+<input id="code" type="text" value="K7PX9O" aria-invalid="true" aria-describedby="code-err" autocomplete="off" style="min-height: 60px; border: 2.5px solid #8f1d1d; border-radius: 8px; padding: 0 16px; font: 600 26px 'IBM Plex Mono', monospace; letter-spacing: .3em; text-transform: uppercase; box-sizing: border-box; width: 100%">
+<div id="code-err" role="alert" style="display: flex; gap: 8px; font-size: 14px; line-height: 1.45; color: #8f1d1d"><b aria-hidden="true">!</b><span>We couldn't find that code. Check letters that look alike (0 and O, 1 and I) and try again.</span></div>
+<span style="font-size: 13px; color: #5E5468">Not case-sensitive.</span>
+</div>
+<a class="btn" href="M-Invite.dc.html">Find my invitation</a>
+<div style="display: flex; gap: 14px; align-items: center; border: 1px solid #D3C6E0; border-radius: 10px; padding: 14px">
+<div class="ph" style="width: 84px; height: 60px; flex-shrink: 0; font-size: 10px">[card back · code here]</div>
+<span style="font-size: 14px; line-height: 1.45; color: #4A4056">Have your invitation? Scanning its QR code with your phone camera skips this step.</span>
+</div>
+<p style="margin: 0; font-size: 14px; color: #5E5468; line-height: 1.5">Lost your invitation? Email us at [couple email] and we'll send your link.</p>
+</div>
+<div style="margin: 0 20px 20px; font: 12px/1.5 'IBM Plex Mono', monospace; color: #7a2c0c; background: #fff3e6; border: 1px solid #c2410c; border-radius: 4px; padding: 10px 12px">Design note — shown in its error state. Loading: button reads "Finding…" and is disabled. No name search: a code is the only way in, so households can't look each other up.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
