@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: #faf8f5;
+  color: #1c1917;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+}

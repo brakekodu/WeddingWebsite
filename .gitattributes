@@ -1,0 +1,6 @@
+# Normalize line endings in the repository; check out with LF everywhere so
+# SQL migrations and scripts are byte-identical across machines.
+* text=auto eol=lf
+*.ico binary
+*.png binary
+*.jpg binary

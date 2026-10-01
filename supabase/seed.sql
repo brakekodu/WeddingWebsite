@@ -1,0 +1,4 @@
+-- Local-development seed (used by `supabase db reset` with Docker only).
+-- Intentionally empty: events, meals, and guests are configured by the
+-- couple in the admin app and are never hard-coded. Automated tests create
+-- their own data (tests/db/harness.ts, scripts/verify-remote.ts).
