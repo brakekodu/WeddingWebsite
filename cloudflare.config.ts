@@ -24,9 +24,9 @@ export default defineConfig({
       // this after invitations are printed.
       APP_BASE_URL: bindings.text("https://kevinandsarina.com"),
       // Supabase Dashboard → Project Settings → Data API → Project URL
-      NEXT_PUBLIC_SUPABASE_URL: bindings.text("https://REPLACE_WITH_PROJECT_REF.supabase.co"),
+      NEXT_PUBLIC_SUPABASE_URL: bindings.text("https://mwkyrynliaaavtsbnvrg.supabase.co"),
       // Supabase Dashboard → Project Settings → API Keys → Publishable key
-      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: bindings.text("REPLACE_WITH_PUBLISHABLE_KEY"),
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: bindings.text("sb_publishable_KoqOGWi6k3bk1c4gKerLVA_QqqRzcWz"),
     },
   }),
 });
