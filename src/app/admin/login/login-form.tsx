@@ -12,7 +12,16 @@ export function LoginForm({ next }: { next?: string }) {
       {next && <input type="hidden" name="next" value={next} />}
       <label className="block">
         <span className={ui.label}>Email</span>
-        <input name="email" type="email" required autoComplete="username" className={ui.input} />
+        <input
+          // Re-mount with the submitted email so a failed attempt keeps it filled in.
+          key={state?.email ?? ""}
+          name="email"
+          type="email"
+          required
+          autoComplete="username"
+          defaultValue={state?.email ?? ""}
+          className={ui.input}
+        />
       </label>
       <label className="block">
         <span className={ui.label}>Password</span>
