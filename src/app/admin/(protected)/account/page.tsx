@@ -1,5 +1,5 @@
 import { ActionForm } from "@/components/ui/action-form";
-import { TextField } from "@/components/ui/fields";
+import { PasswordInput } from "@/components/ui/password-input";
 import { ui } from "@/components/ui/styles";
 import { requireAdminPage } from "@/lib/auth/admin";
 import { changePassword } from "./actions";
@@ -17,15 +17,15 @@ export default async function AccountPage() {
       <section className={ui.card}>
         <h2 className={`${ui.h2} mb-4`}>Change password</h2>
         <ActionForm action={changePassword} submitLabel="Change password" resetOnSuccess>
-          <TextField
-            name="password"
-            label="New password"
-            type="password"
-            required
-            autoComplete="new-password"
-            hint="At least 12 characters."
-          />
-          <TextField name="confirm" label="Type it again" type="password" required autoComplete="new-password" />
+          <label className="block">
+            <span className={ui.label}>New password</span>
+            <PasswordInput name="password" autoComplete="new-password" className={ui.input} />
+            <span className={ui.hint}>At least 12 characters.</span>
+          </label>
+          <label className="block">
+            <span className={ui.label}>Type it again</span>
+            <PasswordInput name="confirm" autoComplete="new-password" className={ui.input} />
+          </label>
         </ActionForm>
       </section>
     </div>

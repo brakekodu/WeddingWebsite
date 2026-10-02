@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { PasswordInput } from "@/components/ui/password-input";
 import { ui } from "@/components/ui/styles";
 import { signIn } from "./actions";
 
@@ -15,7 +16,7 @@ export function LoginForm({ next }: { next?: string }) {
       </label>
       <label className="block">
         <span className={ui.label}>Password</span>
-        <input name="password" type="password" required autoComplete="current-password" className={ui.input} />
+        <PasswordInput name="password" autoComplete="current-password" className={ui.input} />
       </label>
       <button type="submit" className={`${ui.button} w-full`} disabled={pending}>
         {pending ? "Signing in…" : "Sign in"}
