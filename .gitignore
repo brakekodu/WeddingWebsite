@@ -64,3 +64,4 @@ next-env.d.ts
 # design handoff: keep the extracted folder; skip duplicates
 /design/*.zip
 /design/*.pdf
+/design/My_Favorites/

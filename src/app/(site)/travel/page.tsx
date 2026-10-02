@@ -1,5 +1,7 @@
 import { HotelCard, PhotoPlaceholder, SectionLabel } from "@/components/site/parts";
+import { SitePhoto } from "@/components/site/photo";
 import { s } from "@/components/site/styles";
+import { PLACEMENTS } from "@/content/photos";
 import { site } from "@/content/site";
 
 export const metadata = { title: "Travel & Stay" };
@@ -32,6 +34,8 @@ export default function TravelPage() {
           ))}
         </nav>
       </section>
+
+      <SitePhoto photo={PLACEMENTS.travelHero} sizes="100vw" priority className="h-[40svh] w-full sm:h-[55vh]" />
 
       <section id="stay" className={`${s.section} scroll-mt-20`}>
         <div className={`${s.container} space-y-6`}>

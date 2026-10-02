@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import { Countdown, EventCard, groupByDay, PhotoPlaceholder, SectionLabel } from "@/components/site/parts";
+import { SitePhoto } from "@/components/site/photo";
 import { s } from "@/components/site/styles";
+import { PLACEMENTS } from "@/content/photos";
 import { coupleNames, faqPreview, site } from "@/content/site";
 import { formatDateOnly, formatDayHeading } from "@/lib/format";
 import { getPublicSite, getViewer } from "@/lib/site/server";
@@ -12,24 +14,35 @@ export default async function Home() {
   const rsvpHref = viewer ? `/i/${viewer.token}` : "/rsvp";
   const deadline = formatDateOnly(publicSite.rsvp_deadline) ?? "[RSVP deadline]";
   const days = groupByDay(publicSite.events);
-  const photos = site.gallery.photos.slice(0, 4);
   const [hotel] = site.travel.hotels;
 
   return (
     <>
-      <section className="bg-lilac px-5 py-16 text-center sm:py-28">
-        <p className="mb-6 font-mono text-xs text-muted">[hero engagement photo or muted video loop]</p>
-        <h1 className="font-serif text-5xl leading-tight text-ink sm:text-7xl">
-          {site.couple.first} &amp; {site.couple.second}
-        </h1>
-        <p className="mt-4 text-lg text-ink">
-          {site.dateLabel} · {site.location}
-        </p>
-        <Countdown className="mt-5" />
-        <div className="mt-8">
-          <Link href={rsvpHref} className={`${s.btn} w-full max-w-xs`}>
-            RSVP
-          </Link>
+      <section className="relative isolate flex min-h-[85svh] items-end justify-center overflow-hidden px-5 pt-24 pb-14 text-center sm:min-h-[88vh] sm:pb-20">
+        <SitePhoto
+          photo={PLACEMENTS.homeHero}
+          sizes="100vw"
+          priority
+          className="absolute inset-0 -z-20 h-full w-full"
+        />
+        {/* Darken toward the text so it stays readable over any part of the photo. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 bg-gradient-to-t from-plum-deep/90 via-plum-deep/40 to-plum-deep/5"
+        />
+        <div className="text-white">
+          <h1 className="font-serif text-5xl leading-tight drop-shadow-sm sm:text-7xl">
+            {site.couple.first} &amp; {site.couple.second}
+          </h1>
+          <p className="mt-4 text-lg">
+            {site.dateLabel} · {site.location}
+          </p>
+          <Countdown className="mt-5" />
+          <div className="mt-8">
+            <Link href={rsvpHref} className={`${s.btn} w-full max-w-xs`}>
+              RSVP
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -40,7 +53,11 @@ export default async function Home() {
 
       <section className={s.section}>
         <div className={`${s.container} grid items-center gap-8 md:grid-cols-2`}>
-          <PhotoPlaceholder label="story photo" className="aspect-square" />
+          <SitePhoto
+            photo={PLACEMENTS.homeStory}
+            sizes="(min-width: 768px) 480px, 100vw"
+            className="aspect-[4/5] w-full rounded-xl"
+          />
           <div className="space-y-3">
             <SectionLabel>Our story</SectionLabel>
             <h2 className={s.h2}>{site.story.title}</h2>
@@ -130,23 +147,14 @@ export default async function Home() {
             </Link>
           </div>
           <div className="flex snap-x gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-4 md:overflow-visible">
-            {photos.length > 0
-              ? photos.map((p) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    key={p.src}
-                    src={p.src}
-                    alt={p.alt}
-                    className="aspect-[3/4] w-56 shrink-0 snap-start rounded-lg object-cover md:w-auto"
-                  />
-                ))
-              : [1, 2, 3, 4].map((n) => (
-                  <PhotoPlaceholder
-                    key={n}
-                    label={`photo ${n}`}
-                    className="aspect-[3/4] w-56 shrink-0 snap-start md:w-auto"
-                  />
-                ))}
+            {PLACEMENTS.homeStrip.map((p) => (
+              <SitePhoto
+                key={p.id}
+                photo={p}
+                sizes="(min-width: 768px) 25vw, 224px"
+                className="aspect-[3/4] w-56 shrink-0 snap-start rounded-lg md:w-auto"
+              />
+            ))}
           </div>
         </div>
       </section>

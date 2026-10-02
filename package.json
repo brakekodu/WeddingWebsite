@@ -20,7 +20,8 @@
     "db:migration": "supabase migration new",
     "db:types": "supabase gen types typescript --linked --schema public > src/lib/supabase/database.generated.ts",
     "admin:grant": "tsx scripts/grant-admin.ts",
-    "verify:remote": "tsx scripts/verify-remote.ts"
+    "verify:remote": "tsx scripts/verify-remote.ts",
+    "photos": "tsx scripts/optimize-photos.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -53,6 +54,7 @@
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "sharp": "^0.35.5",
     "supabase": "^2.119.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",

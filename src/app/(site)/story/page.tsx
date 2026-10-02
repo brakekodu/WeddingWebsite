@@ -1,5 +1,7 @@
 import { PhotoPlaceholder, SectionLabel } from "@/components/site/parts";
+import { SitePhoto } from "@/components/site/photo";
 import { s } from "@/components/site/styles";
+import { PLACEMENTS } from "@/content/photos";
 import { site } from "@/content/site";
 
 export const metadata = { title: "Our Story" };
@@ -14,20 +16,33 @@ export default function StoryPage() {
         <p className="mx-auto mt-4 max-w-xl text-muted">{site.story.teaser}</p>
       </section>
 
-      {site.story.sections.map((section, i) => (
-        <section key={section.title} className={s.section}>
-          <div className={`${s.container} grid items-center gap-8 md:grid-cols-2`}>
-            <PhotoPlaceholder
-              label={`${section.title.toLowerCase()} photo`}
-              className={`aspect-[4/3] ${i % 2 ? "md:order-2" : ""}`}
-            />
-            <div className="space-y-3">
-              <h2 className={s.h2}>{section.title}</h2>
-              <p className={`${s.body} whitespace-pre-line`}>{section.body}</p>
+      <SitePhoto photo={PLACEMENTS.storyBanner} sizes="100vw" priority className="h-[45svh] w-full sm:h-[60vh]" />
+
+      {site.story.sections.map((section, i) => {
+        const photo = PLACEMENTS.storySections[i];
+        return (
+          <section key={section.title} className={s.section}>
+            <div className={`${s.container} grid items-center gap-8 md:grid-cols-2`}>
+              {photo ? (
+                <SitePhoto
+                  photo={photo}
+                  sizes="(min-width: 768px) 480px, 100vw"
+                  className={`aspect-[4/5] w-full rounded-xl ${i % 2 ? "md:order-2" : ""}`}
+                />
+              ) : (
+                <PhotoPlaceholder
+                  label={`${section.title.toLowerCase()} photo`}
+                  className={`aspect-[4/3] ${i % 2 ? "md:order-2" : ""}`}
+                />
+              )}
+              <div className="space-y-3">
+                <h2 className={s.h2}>{section.title}</h2>
+                <p className={`${s.body} whitespace-pre-line`}>{section.body}</p>
+              </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
 
       <section id="wedding-party" className={s.section}>
         <div className={`${s.container} space-y-6`}>

@@ -101,8 +101,7 @@ export const site = {
 
   gallery: {
     intro: "Engagement photos. After the wedding, this is where everyone's photos will live.",
-    /** Files in /public/gallery, e.g. { src: "/gallery/01.jpg", alt: "…" }. Empty shows placeholders. */
-    photos: [] as { src: string; alt: string }[],
+    // Photos and their order live in src/content/photos.ts.
   },
 
   registry: {

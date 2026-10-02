@@ -13,7 +13,9 @@ import {
   SiteFooter,
   ViewingAsPill,
 } from "@/components/site/parts";
+import { SitePhoto } from "@/components/site/photo";
 import { SiteHeader } from "@/components/site/site-header";
+import { PLACEMENTS } from "@/content/photos";
 import { s } from "@/components/site/styles";
 import { faqPreview, site } from "@/content/site";
 import { formatDateOnly, formatDayHeading, formatShortDate } from "@/lib/format";
@@ -77,7 +79,12 @@ function Welcome({ token, view, names }: { token: string; view: InvitationView; 
   return (
     <section className="bg-lilac px-5 py-12 text-center sm:py-20">
       <div className="mx-auto max-w-lg space-y-5">
-        <PhotoPlaceholder label="engagement photo" className="aspect-[4/3]" />
+        <SitePhoto
+          photo={PLACEMENTS.inviteWelcome}
+          sizes="(min-width: 640px) 512px, 100vw"
+          priority
+          className="aspect-[4/3] w-full rounded-xl"
+        />
         <SectionLabel>Welcome</SectionLabel>
         <h1 className={s.h1}>{names}</h1>
         <p className="text-lg text-ink">We&apos;re so excited to celebrate with you.</p>
