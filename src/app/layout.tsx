@@ -10,6 +10,14 @@ const mono = IBM_Plex_Mono({ variable: "--font-plex-mono", subsets: ["latin"], w
 export const metadata: Metadata = {
   title: { default: coupleNames, template: `%s · ${coupleNames}` },
   description: `The wedding of ${coupleNames}.`,
+  // Interim monogram icon (public/icon.svg). Regenerate the PNG/ICO sizes when the real artwork exists.
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export const viewport: Viewport = {

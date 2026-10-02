@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kevin &amp; Sarina">
+  <!-- Interim monogram icon (approved palette). Replace with the real monogram artwork when it exists. -->
+  <rect width="64" height="64" rx="14" fill="#6F5A8F"/>
+  <text x="32" y="42" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#FBF8F2" letter-spacing="-0.5">K<tspan font-size="19" dy="-1" fill="#DCD2E6">&amp;</tspan><tspan dy="1">S</tspan></text>
+</svg>
