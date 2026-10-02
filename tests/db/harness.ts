@@ -34,12 +34,10 @@ const SUPABASE_STUB = `
   $$;
   grant usage on schema auth to anon, authenticated, service_role;
 
-  -- Supabase's default privileges: everything in public is granted to the
-  -- API roles, and RLS is what actually protects data.
+  -- Current Supabase projects do NOT automatically grant new tables to the
+  -- API roles, so migrations must grant everything explicitly (and tests
+  -- catch any table that was forgotten). RLS then decides which rows.
   grant usage on schema public to anon, authenticated, service_role;
-  alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
-  alter default privileges in schema public grant all on functions to anon, authenticated, service_role;
-  alter default privileges in schema public grant all on sequences to anon, authenticated, service_role;
 
   create schema extensions;
   create extension pgcrypto schema extensions;
