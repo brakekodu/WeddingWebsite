@@ -87,6 +87,17 @@ API Keys → roll/revoke it, then update `.env.local`.
 - R2 API tokens (when needed) are bucket-scoped with minimal permissions and server-only.
 - Public display of guest uploads requires moderation (later phase).
 
+## Admin photo uploads
+
+- Upload and crop endpoints (`/admin/photos/upload`, `/admin/photos/placement`)
+  require an admin session; the proxy also redirects signed-out requests.
+- Every storage key is generated on the server; the browser never chooses a path.
+- Each file is size-limited (20 MB) and must carry a real WebP/JPEG signature.
+- `/media/[...key]` serves only `site/photos/…` and `site/crops/…` keys; other
+  prefixes (e.g. future `guest-uploads/`) are not readable through it.
+- Uploaded photos are re-encoded in the browser, which drops camera metadata
+  including GPS location.
+
 ## Known gaps / future hardening
 
 - Per-IP rate limiting for `/rsvp` and RSVP submission (edge/WAF), optionally Turnstile.

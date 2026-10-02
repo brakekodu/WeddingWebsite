@@ -22,6 +22,33 @@
 
 Destructive or permanent actions (lock, regenerate, void, delete) ask for confirmation.
 
+## Photos (Admin → Photos)
+
+- **Photos on your website** — every spot that shows a photo (home banner, story
+  preview, photo strip, Our Story banner and section photos, invitation welcome,
+  Travel banner). **Change & crop** opens the editor; **Use original** puts the
+  original photo back.
+- **Crop editor** — choose a photo (or upload one), then drag to center and zoom.
+  Banners have separate **On computers** / **On phones** crops so faces stay
+  centered on both. The frame shows exactly what visitors see. Saving makes it
+  live immediately.
+- **Gallery** — reorder (↑ ↓), crop each thumbnail, remove, or add photos from the
+  library. Tapping a photo on the site shows the whole, uncropped photo.
+- **Photo library** — upload from a computer or phone (huge originals are shrunk
+  in the browser first; location data is removed). Add a description for screen
+  readers. Photos in use can't be deleted.
+
+Spots and their shapes are defined in `src/lib/media/slots.ts`.
+
+## Admin accounts
+
+Two admins: Kevin and Sarina. To add an admin: create the user in
+Supabase → Authentication → Users → **Add user → Create new user** (password +
+Auto Confirm), then in the SQL Editor run
+`insert into public.admin_users (user_id, email) select id, email from auth.users where email = '<email>';`
+(or `npm run admin:grant -- <email>`). Each admin can change their password at
+**Admin → Account**.
+
 ## Dashboard metric definitions
 
 "Invited" = on at least one invitation that isn't void. Implemented and tested

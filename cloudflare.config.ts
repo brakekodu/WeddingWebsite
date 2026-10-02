@@ -20,6 +20,8 @@ export default defineConfig({
     domains: ["kevinandsarina.com", "www.kevinandsarina.com"],
     env: {
       ASSETS: bindings.assets(),
+      // Website photos uploaded from Admin → Photos (R2 bucket, private; served via /media/...).
+      MEDIA: bindings.r2({ name: "brake-wedding" }),
       // Canonical origin for invitation links and QR codes. Never change
       // this after invitations are printed.
       APP_BASE_URL: bindings.text("https://kevinandsarina.com"),

@@ -33,6 +33,7 @@
     "qrcode": "^1.5.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "react-easy-crop": "^6.2.3",
     "react-server-dom-webpack": "^19.3.0",
     "server-only": "^0.0.1",
     "vinext": "^1.0.1",

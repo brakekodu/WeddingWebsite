@@ -122,6 +122,27 @@ export type RsvpActivityRow = {
   occurred_at: string;
 };
 
+export type SitePhotoRow = {
+  id: string;
+  /** R2 key prefix: site/photos/<id> */
+  storage_prefix: string;
+  format: "webp" | "jpg";
+  width: number;
+  height: number;
+  widths: number[];
+  alt: string;
+  original_name: string | null;
+} & Timestamps;
+
+export type SitePlacementRow = {
+  id: string;
+  slot: string;
+  position: number;
+  /** "bundled:<id>" or a site_photos id */
+  photo_ref: string;
+  crops: Json;
+} & Timestamps;
+
 export type WeddingSettingsRow = {
   id: boolean;
   /** "YYYY-MM-DD"; last day to RSVP (inclusive, venue time). */
@@ -147,6 +168,18 @@ export type Database = {
   __InternalSupabase: { PostgrestVersion: "13" };
   public: {
     Tables: {
+      site_photos: {
+        Row: SitePhotoRow;
+        Insert: InsertOf<SitePhotoRow, "storage_prefix" | "format" | "width" | "height" | "widths">;
+        Update: Partial<SitePhotoRow>;
+        Relationships: [];
+      };
+      site_placements: {
+        Row: SitePlacementRow;
+        Insert: InsertOf<SitePlacementRow, "slot" | "photo_ref">;
+        Update: Partial<SitePlacementRow>;
+        Relationships: [];
+      };
       wedding_settings: {
         Row: WeddingSettingsRow;
         Insert: Partial<WeddingSettingsRow>;
@@ -242,6 +275,7 @@ export type Database = {
     Functions: {
       get_invitation: { Args: { p_token: string }; Returns: Json };
       get_public_site: { Args: Record<string, never>; Returns: Json };
+      get_site_media: { Args: Record<string, never>; Returns: Json };
       record_rsvp_started: { Args: { p_token: string }; Returns: undefined };
       submit_rsvp: { Args: { p_token: string; p_payload: Json }; Returns: Json };
       resolve_rsvp_code: { Args: { p_code: string }; Returns: Json };

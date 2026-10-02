@@ -13,9 +13,10 @@ import {
   SiteFooter,
   ViewingAsPill,
 } from "@/components/site/parts";
-import { SitePhoto } from "@/components/site/photo";
+import { SlotImage } from "@/components/site/photo";
 import { SiteHeader } from "@/components/site/site-header";
-import { PLACEMENTS } from "@/content/photos";
+import { resolveSlot, type ResolvedPhoto } from "@/lib/media/resolve";
+import { getSiteMedia } from "@/lib/media/server";
 import { s } from "@/components/site/styles";
 import { faqPreview, site } from "@/content/site";
 import { formatDateOnly, formatDayHeading, formatShortDate } from "@/lib/format";
@@ -62,7 +63,12 @@ export default async function InvitationPage(props: PageProps<"/i/[token]">) {
       <ViewingAsPill names={names} token={token} />
       <main className="flex-1">
         {state === "welcome" ? (
-          <Welcome token={token} view={view} names={names} />
+          <Welcome
+            token={token}
+            view={view}
+            names={names}
+            photo={resolveSlot(await getSiteMedia(), "invite.welcome")}
+          />
         ) : (
           <Portal token={token} view={view} names={names} />
         )}
@@ -73,14 +79,24 @@ export default async function InvitationPage(props: PageProps<"/i/[token]">) {
 }
 
 /** State A (screen 03). */
-function Welcome({ token, view, names }: { token: string; view: InvitationView; names: string }) {
+function Welcome({
+  token,
+  view,
+  names,
+  photo,
+}: {
+  token: string;
+  view: InvitationView;
+  names: string;
+  photo: ResolvedPhoto;
+}) {
   const venue = view.events.find((e) => e.rsvp_required)?.location_name ?? "[Venue]";
   const deadline = formatDateOnly(view.rsvp_deadline) ?? "[RSVP deadline]";
   return (
     <section className="bg-lilac px-5 py-12 text-center sm:py-20">
       <div className="mx-auto max-w-lg space-y-5">
-        <SitePhoto
-          photo={PLACEMENTS.inviteWelcome}
+        <SlotImage
+          photo={photo}
           sizes="(min-width: 640px) 512px, 100vw"
           priority
           className="aspect-[4/3] w-full rounded-xl"

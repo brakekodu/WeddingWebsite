@@ -1,7 +1,8 @@
 import { HotelCard, PhotoPlaceholder, SectionLabel } from "@/components/site/parts";
-import { SitePhoto } from "@/components/site/photo";
+import { SlotImage } from "@/components/site/photo";
 import { s } from "@/components/site/styles";
-import { PLACEMENTS } from "@/content/photos";
+import { resolveSlot } from "@/lib/media/resolve";
+import { getSiteMedia } from "@/lib/media/server";
 import { site } from "@/content/site";
 
 export const metadata = { title: "Travel & Stay" };
@@ -14,7 +15,8 @@ const ANCHORS = [
 ];
 
 /** Travel & Stay (screen 16): one page with in-page anchors. */
-export default function TravelPage() {
+export default async function TravelPage() {
+  const media = await getSiteMedia();
   const t = site.travel;
   return (
     <>
@@ -35,7 +37,12 @@ export default function TravelPage() {
         </nav>
       </section>
 
-      <SitePhoto photo={PLACEMENTS.travelHero} sizes="100vw" priority className="h-[40svh] w-full sm:h-[55vh]" />
+      <SlotImage
+        photo={resolveSlot(media, "travel.banner")}
+        sizes="100vw"
+        priority
+        className="h-[40svh] w-full sm:h-[55vh]"
+      />
 
       <section id="stay" className={`${s.section} scroll-mt-20`}>
         <div className={`${s.container} space-y-6`}>

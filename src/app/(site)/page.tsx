@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import { Countdown, EventCard, groupByDay, PhotoPlaceholder, SectionLabel } from "@/components/site/parts";
-import { SitePhoto } from "@/components/site/photo";
+import { SlotImage } from "@/components/site/photo";
 import { s } from "@/components/site/styles";
-import { PLACEMENTS } from "@/content/photos";
+import { resolveSlot, resolveSlotList } from "@/lib/media/resolve";
+import { getSiteMedia } from "@/lib/media/server";
 import { coupleNames, faqPreview, site } from "@/content/site";
 import { formatDateOnly, formatDayHeading } from "@/lib/format";
 import { getPublicSite, getViewer } from "@/lib/site/server";
 
 /** Home: hero + previews of every page, so most visitors never need the nav (screens 10 & 14). */
 export default async function Home() {
-  const [publicSite, viewer] = await Promise.all([getPublicSite(), getViewer()]);
+  const [publicSite, viewer, media] = await Promise.all([getPublicSite(), getViewer(), getSiteMedia()]);
   const rsvpHref = viewer ? `/i/${viewer.token}` : "/rsvp";
   const deadline = formatDateOnly(publicSite.rsvp_deadline) ?? "[RSVP deadline]";
   const days = groupByDay(publicSite.events);
@@ -19,8 +20,8 @@ export default async function Home() {
   return (
     <>
       <section className="relative isolate flex min-h-[85svh] items-end justify-center overflow-hidden px-5 pt-24 pb-14 text-center sm:min-h-[88vh] sm:pb-20">
-        <SitePhoto
-          photo={PLACEMENTS.homeHero}
+        <SlotImage
+          photo={resolveSlot(media, "home.hero")}
           sizes="100vw"
           priority
           className="absolute inset-0 -z-20 h-full w-full"
@@ -53,8 +54,8 @@ export default async function Home() {
 
       <section className={s.section}>
         <div className={`${s.container} grid items-center gap-8 md:grid-cols-2`}>
-          <SitePhoto
-            photo={PLACEMENTS.homeStory}
+          <SlotImage
+            photo={resolveSlot(media, "home.story")}
             sizes="(min-width: 768px) 480px, 100vw"
             className="aspect-[4/5] w-full rounded-xl"
           />
@@ -147,9 +148,9 @@ export default async function Home() {
             </Link>
           </div>
           <div className="flex snap-x gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-4 md:overflow-visible">
-            {PLACEMENTS.homeStrip.map((p) => (
-              <SitePhoto
-                key={p.id}
+            {resolveSlotList(media, "home.strip").map((p) => (
+              <SlotImage
+                key={p.key}
                 photo={p}
                 sizes="(min-width: 768px) 25vw, 224px"
                 className="aspect-[3/4] w-56 shrink-0 snap-start rounded-lg md:w-auto"

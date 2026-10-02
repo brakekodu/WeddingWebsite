@@ -75,11 +75,18 @@ Admin pages and `/i/*` are dynamic (per request, never cached). `/`, `/rsvp`,
 and `robots.txt` are static. Security headers are set in `next.config.ts`
 (no framing, `no-referrer` + `noindex` on invitation/admin routes).
 
-## Cloudflare R2 (foundation only)
+## Cloudflare R2
 
 The existing bucket `brake-wedding` (Eastern North America, Standard) will be
-used through R2's S3-compatible API. **Nothing in Phase 1 reads or writes R2,
-and no R2 credentials are needed yet.**
+holds website photos uploaded from Admin → Photos. The Worker reaches it through a
+**binding** (`MEDIA` in `cloudflare.config.ts`), so there are no R2 access keys.
+Files live under `site/photos/<id>/` (master + full sizes) and
+`site/crops/<spot>/<position>/<variant>-<nonce>-<width>` (each saved crop gets
+new names, so caches never show an old crop). Browsers fetch them through
+`/media/[...key]`, which serves only those shapes of key with long-lived caching.
+Supabase tables `site_photos` / `site_placements` record which photo is where.
+Photos are resized and cropped in the admin's browser (`src/lib/media/client-images.ts`)
+before upload.
 
 Logical prefixes (one bucket, separated by key prefix):
 

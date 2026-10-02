@@ -2,13 +2,13 @@
 
 /* eslint-disable @next/next/no-img-element -- static responsive WebP files */
 import { useEffect, useRef, useState } from "react";
-import { photoSrc, photoSrcSet, type Photo } from "@/content/photos";
+import type { ResolvedPhoto } from "@/lib/media/resolve";
 
 const ROUND_BUTTON =
   "flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-2xl text-ink hover:bg-white";
 
 /** Component 7: gallery grid with a lightbox (arrows, swipe-free buttons, Esc closes, focus returns). */
-export function GalleryGrid({ photos }: { photos: Photo[] }) {
+export function GalleryGrid({ photos }: { photos: ResolvedPhoto[] }) {
   const [index, setIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -32,32 +32,36 @@ export function GalleryGrid({ photos }: { photos: Photo[] }) {
   return (
     <>
       <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {photos.map((p, i) => (
-          <li key={p.id}>
-            <button
-              ref={(el) => {
-                triggerRefs.current[i] = el;
-              }}
-              type="button"
-              onClick={() => setIndex(i)}
-              className="group block w-full overflow-hidden rounded-lg"
-              aria-label={`View larger: ${p.alt}`}
-            >
-              <img
-                src={photoSrc(p, 640)}
-                srcSet={photoSrcSet(p)}
-                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-                alt=""
-                width={p.width}
-                height={p.height}
-                loading="lazy"
-                decoding="async"
-                style={{ objectPosition: p.focus }}
-                className="aspect-[3/4] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-              />
-            </button>
-          </li>
-        ))}
+        {photos.map((p, i) => {
+          // Admin-cropped thumbnail when set; otherwise the whole photo centered on its focus.
+          const thumb = p.variants.default ?? p.full;
+          return (
+            <li key={p.key}>
+              <button
+                ref={(el) => {
+                  triggerRefs.current[i] = el;
+                }}
+                type="button"
+                onClick={() => setIndex(i)}
+                className="group block w-full overflow-hidden rounded-lg"
+                aria-label={`View larger: ${p.alt}`}
+              >
+                <img
+                  src={thumb.src}
+                  srcSet={thumb.srcSet}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                  alt=""
+                  width={thumb.width}
+                  height={thumb.height}
+                  loading="lazy"
+                  decoding="async"
+                  style={thumb === p.full ? { objectPosition: p.focus } : undefined}
+                  className="aspect-[3/4] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                />
+              </button>
+            </li>
+          );
+        })}
       </ul>
 
       <dialog
@@ -74,12 +78,12 @@ export function GalleryGrid({ photos }: { photos: Photo[] }) {
         {current && (
           <figure className="flex h-[100svh] w-screen flex-col items-center justify-center gap-3 p-4">
             <img
-              src={photoSrc(current, current.widths.at(-1)!)}
-              srcSet={photoSrcSet(current)}
+              src={current.full.src}
+              srcSet={current.full.srcSet}
               sizes="100vw"
               alt={current.alt}
-              width={current.width}
-              height={current.height}
+              width={current.full.width}
+              height={current.full.height}
               className="max-h-[80svh] w-auto max-w-full rounded-lg object-contain"
             />
             <figcaption className="text-center text-sm text-white">

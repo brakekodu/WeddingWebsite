@@ -1,35 +1,57 @@
-/* eslint-disable @next/next/no-img-element -- static responsive WebP files served by Cloudflare; no image optimizer needed */
-import { photoSrc, photoSrcSet, type Photo } from "@/content/photos";
+/* eslint-disable @next/next/no-img-element -- static responsive images served by Cloudflare; no optimizer needed */
+import type { ResolvedPhoto } from "@/lib/media/resolve";
+
+/** Matches Tailwind's md breakpoint: desktop crops apply from here up. */
+const DESKTOP_MEDIA = "(min-width: 768px)";
 
 /**
- * Responsive engagement photo. `sizes` tells the browser how wide the image
- * renders so it downloads the smallest file that looks sharp.
+ * A photo placed in a spot on the site. Uses the admin's crop when one exists
+ * (separate phone/desktop crops via <picture>), otherwise the whole photo
+ * centered on its focal point. `sizes` lets browsers download the smallest
+ * file that still looks sharp.
  */
-export function SitePhoto({
+export function SlotImage({
   photo,
   sizes,
   className = "",
   priority = false,
 }: {
-  photo: Photo;
+  photo: ResolvedPhoto;
   sizes: string;
   className?: string;
-  /** Load immediately (above the fold, e.g. the hero). */
   priority?: boolean;
 }) {
-  return (
+  const { desktop, phone } = photo.variants;
+  const main = photo.variants.default ?? phone ?? desktop ?? photo.full;
+  const cropped = main !== photo.full;
+  const img = (
     <img
-      src={photoSrc(photo, photo.widths.includes(1280) ? 1280 : photo.widths.at(-1)!)}
-      srcSet={photoSrcSet(photo)}
+      src={main.src}
+      srcSet={main.srcSet}
       sizes={sizes}
       alt={photo.alt}
-      width={photo.width}
-      height={photo.height}
+      width={main.width}
+      height={main.height}
       loading={priority ? "eager" : "lazy"}
       fetchPriority={priority ? "high" : undefined}
       decoding="async"
-      style={{ objectPosition: photo.focus }}
+      style={cropped ? undefined : { objectPosition: photo.focus }}
       className={`object-cover ${className}`}
     />
   );
+  if (desktop && phone) {
+    return (
+      <picture className="contents">
+        <source
+          media={DESKTOP_MEDIA}
+          srcSet={desktop.srcSet}
+          sizes={sizes}
+          width={desktop.width}
+          height={desktop.height}
+        />
+        {img}
+      </picture>
+    );
+  }
+  return img;
 }

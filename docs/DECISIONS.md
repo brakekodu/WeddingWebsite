@@ -144,3 +144,12 @@ special handling yet. · 5 One person answers for the whole invitation. ·
 step. · 10 Addresses shown for public events only. · 11 Wedding Party merged
 into Our Story; 6 nav links. · 12 No site-wide password. · 18–19 Wedding-week
 mode and photo uploads deferred.
+
+### D22 — Photos are managed in the admin, stored in R2 via a Worker binding
+
+Admins swap and crop every photo on the site. Images are resized and cropped in
+the browser (no paid image service, no native modules in the Worker), stored in
+R2 through the Worker's binding (no access keys), and served by `/media/...`.
+Spots without a choice fall back to the bundled engagement photos, so the site
+always renders even before the database is set up. Banners get separate
+desktop/phone crops (art direction via `<picture>`).

@@ -1,18 +1,19 @@
 /**
- * Engagement photos used on the site. Files are produced by `npm run photos`
- * (see scripts/optimize-photos.ts); this file adds the human parts: alt text
- * for screen readers and where to keep the faces when an image is cropped.
+ * The bundled engagement photos (public/photos, produced by `npm run photos`),
+ * with alt text for screen readers and the point to keep centered when an
+ * image is cropped automatically. These are the defaults; the admin can swap
+ * any spot to another photo and crop it (Admin → Photos). Default placements
+ * live in src/lib/media/slots.ts.
  */
 import { PHOTO_FILES } from "@/content/photos.generated";
 
 type PhotoId = (typeof PHOTO_FILES)[number]["id"];
 
-export interface Photo {
+export interface BundledPhoto {
   id: PhotoId;
   alt: string;
   width: number;
   height: number;
-  /** Largest-first list of available widths. */
   widths: readonly number[];
   /** CSS object-position used when the photo is cropped, e.g. "50% 30%". */
   focus: string;
@@ -46,7 +47,7 @@ const DETAILS: Record<PhotoId, { alt: string; focus?: string }> = {
   i4a9917: { alt: "Kevin and Sarina on wide stone steps glowing in the sunset", focus: "50% 50%" },
 };
 
-export const PHOTOS = {} as Record<PhotoId, Photo>;
+export const PHOTOS = {} as Record<PhotoId, BundledPhoto>;
 for (const f of PHOTO_FILES) {
   PHOTOS[f.id] = {
     id: f.id,
@@ -58,44 +59,4 @@ for (const f of PHOTO_FILES) {
   };
 }
 
-export function photo(id: PhotoId): Photo {
-  return PHOTOS[id];
-}
-
-/** Where each photo appears. Change ids here to rearrange the site. */
-export const PLACEMENTS = {
-  homeHero: photo("156a0913"),
-  homeStory: photo("156a0765"),
-  homeStrip: [photo("156a1335"), photo("156a1282"), photo("i4a9917"), photo("156a1428")],
-  storyBanner: photo("156a0842"),
-  storySections: [photo("i4a9779"), photo("156a1406")],
-  inviteWelcome: photo("156a0842"),
-  travelHero: photo("i4a9875"),
-  /** Gallery order. */
-  gallery: [
-    "156a0913",
-    "156a0765",
-    "i4a9779",
-    "156a0842",
-    "156a1406",
-    "i4a9917",
-    "156a1282",
-    "i4a9825",
-    "156a1335",
-    "i4a9813",
-    "156a1428",
-    "156a0506",
-    "156a1403",
-    "i4a9830",
-    "156a0792",
-    "i4a9875",
-  ].map((id) => photo(id as PhotoId)),
-};
-
-export function photoSrc(p: Photo, width: number): string {
-  return `/photos/${p.id}-${width}.webp`;
-}
-
-export function photoSrcSet(p: Photo): string {
-  return p.widths.map((w) => `${photoSrc(p, w)} ${w}w`).join(", ");
-}
+export const BUNDLED_PHOTOS: BundledPhoto[] = Object.values(PHOTOS);
