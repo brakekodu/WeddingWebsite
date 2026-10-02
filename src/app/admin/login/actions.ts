@@ -1,7 +1,9 @@
 "use server";
 
+import { createClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
-import { isSupabaseConfigured } from "@/lib/env";
+import { getSupabasePublicEnv, isSupabaseConfigured } from "@/lib/env";
+import type { Database } from "@/lib/supabase/database.types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 /** `email` is echoed back so a failed attempt doesn't clear the field. */
@@ -44,16 +46,28 @@ export async function signIn(_prev: LoginState, formData: FormData): Promise<Log
 
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-  if (error || !data.user) {
+  if (error || !data.user || !data.session) {
     return { error: error ? signInErrorMessage(error) : "Couldn't sign in. Please try again.", email };
   }
 
   // Signed in is not enough: the account must be on the admin allowlist.
-  const { data: admin } = await supabase
+  // Check with the just-issued access token explicitly, so the result never
+  // depends on whether the new session cookie is readable within this request.
+  const { url, publishableKey } = getSupabasePublicEnv();
+  const asUser = createClient<Database>(url, publishableKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+    global: { headers: { Authorization: `Bearer ${data.session.access_token}` } },
+  });
+  const { data: admin, error: adminError } = await asUser
     .from("admin_users")
     .select("user_id")
     .eq("user_id", data.user.id)
     .maybeSingle();
+  if (adminError) {
+    console.error("Admin check failed:", adminError);
+    await supabase.auth.signOut();
+    return { error: `Signed in, but couldn't check admin access (${adminError.code}). Please try again.`, email };
+  }
   if (!admin) {
     await supabase.auth.signOut();
     return {
