@@ -65,3 +65,6 @@ next-env.d.ts
 /design/*.zip
 /design/*.pdf
 /design/My_Favorites/
+
+# Personal data (guest lists etc.): never committed
+/private/
