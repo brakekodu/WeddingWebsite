@@ -18,13 +18,14 @@ import { SiteHeader } from "@/components/site/site-header";
 import { resolveSlot, type ResolvedPhoto } from "@/lib/media/resolve";
 import { getSiteMedia } from "@/lib/media/server";
 import { s } from "@/components/site/styles";
-import { faqPreview, site } from "@/content/site";
+import { couple, faqPreview, type SiteContent } from "@/content/site";
 import { formatDateOnly, formatDayHeading, formatShortDate } from "@/lib/format";
 import { fetchInvitationView } from "@/lib/invitations/server";
 import { invitationNames, lastRespondedAt, portalState } from "@/lib/rsvp/flow";
 import { dietarySummary, guestStatuses, mealSummary, personalEvents } from "@/lib/rsvp/portal";
 import type { InvitationView } from "@/lib/rsvp/view";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getSiteContent } from "@/lib/site/server";
 
 export const metadata: Metadata = {
   title: "Your invitation",
@@ -50,11 +51,12 @@ export default async function InvitationPage(props: PageProps<"/i/[token]">) {
 
   const names = invitationNames(view);
   const state = portalState(view);
+  const site = await getSiteContent();
 
   return (
     <>
       <SiteHeader
-        monogram={site.couple.monogram}
+        monogram={couple.monogram}
         items={portalNav(token)}
         homeHref={`/i/${token}`}
         rsvpHref={view.rsvp_open ? `/i/${token}/rsvp${state === "portal" ? "?step=review" : ""}` : `/i/${token}#rsvp`}
@@ -67,10 +69,11 @@ export default async function InvitationPage(props: PageProps<"/i/[token]">) {
             token={token}
             view={view}
             names={names}
+            site={site}
             photo={resolveSlot(await getSiteMedia(), "invite.welcome")}
           />
         ) : (
-          <Portal token={token} view={view} names={names} />
+          <Portal token={token} view={view} names={names} site={site} />
         )}
       </main>
       <SiteFooter />
@@ -83,11 +86,13 @@ function Welcome({
   token,
   view,
   names,
+  site,
   photo,
 }: {
   token: string;
   view: InvitationView;
   names: string;
+  site: SiteContent;
   photo: ResolvedPhoto;
 }) {
   const venue = view.events.find((e) => e.rsvp_required)?.location_name ?? "[Venue]";
@@ -105,9 +110,9 @@ function Welcome({
         <h1 className={s.h1}>{names}</h1>
         <p className="text-lg text-ink">We&apos;re so excited to celebrate with you.</p>
         <div className="space-y-1 text-ink">
-          <p>{site.dateLabel}</p>
+          <p>{site.basics.dateLabel}</p>
           <p>
-            {venue} · {site.location}
+            {venue} · {site.basics.location}
           </p>
         </div>
         <p className="font-semibold">Kindly respond by {deadline}</p>
@@ -121,7 +126,7 @@ function Welcome({
         </div>
         <p className="text-sm text-muted">
           Not {names}?{" "}
-          <a href={`mailto:${site.contactEmail}`} className="underline underline-offset-4">
+          <a href={`mailto:${site.basics.contactEmail}`} className="underline underline-offset-4">
             Let us know
           </a>
         </p>
@@ -131,7 +136,17 @@ function Welcome({
 }
 
 /** State B (screens 11 & 18), and D when the deadline has passed. */
-function Portal({ token, view, names }: { token: string; view: InvitationView; names: string }) {
+function Portal({
+  token,
+  view,
+  names,
+  site,
+}: {
+  token: string;
+  view: InvitationView;
+  names: string;
+  site: SiteContent;
+}) {
   const responded = portalState(view) === "portal";
   const deadline = formatDateOnly(view.rsvp_deadline);
   const sent = formatShortDate(lastRespondedAt(view));
@@ -172,7 +187,7 @@ function Portal({ token, view, names }: { token: string; view: InvitationView; n
       ) : (
         <p className="text-sm text-muted">
           {responded ? "Need a change?" : "The RSVP deadline has passed."}{" "}
-          <a href={`mailto:${site.contactEmail}`} className="underline underline-offset-4">
+          <a href={`mailto:${site.basics.contactEmail}`} className="underline underline-offset-4">
             Contact us
           </a>
           .
@@ -186,7 +201,7 @@ function Portal({ token, view, names }: { token: string; view: InvitationView; n
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted">
-            <Countdown /> <span>{site.dateLabel}</span>
+            <Countdown /> <span>{site.basics.dateLabel}</span>
           </div>
           <h1 className={s.h1}>Welcome back, {names}</h1>
         </div>
@@ -255,7 +270,7 @@ function Portal({ token, view, names }: { token: string; view: InvitationView; n
               <h2 id="questions" className={s.h2}>
                 Questions
               </h2>
-              <FaqAccordion items={faqPreview(3)} />
+              <FaqAccordion items={faqPreview(site, 3)} />
             </section>
           </div>
 
@@ -285,11 +300,11 @@ function Portal({ token, view, names }: { token: string; view: InvitationView; n
               <h2 className={s.h3}>Questions?</h2>
               <p>
                 Email{" "}
-                <a href={`mailto:${site.contactEmail}`} className="underline underline-offset-4">
-                  {site.contactEmail}
+                <a href={`mailto:${site.basics.contactEmail}`} className="underline underline-offset-4">
+                  {site.basics.contactEmail}
                 </a>
               </p>
-              <p className="text-muted">Wedding-week contact: {site.dayOfContact}</p>
+              <p className="text-muted">Wedding-week contact: {site.basics.dayOfContact}</p>
             </section>
           </aside>
         </div>

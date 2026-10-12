@@ -1,9 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { s } from "@/components/site/styles";
-import { coupleNames, site } from "@/content/site";
+import { coupleNames, type SiteContent } from "@/content/site";
 import { daysUntil, directionsUrl, formatTime, formatWeekdayShort, formatEventTimeRange } from "@/lib/format";
 import type { DisplayEvent } from "@/lib/rsvp/view";
+import { weddingDateOf } from "@/lib/site/content";
+import { getSiteContent } from "@/lib/site/server";
 
 /** Component 2: shown on any page opened with an invitation. */
 export function ViewingAsPill({ names, token }: { names: string; token: string }) {
@@ -31,17 +33,18 @@ export function ViewingAsPill({ names, token }: { names: string; token: string }
   );
 }
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const site = await getSiteContent();
   return (
     <footer className="border-t border-mist px-5 py-8 text-sm text-muted sm:px-8 print:hidden">
       <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-2">
         <p>
-          {coupleNames} · {site.dateLabel} · {site.location}
+          {coupleNames} · {site.basics.dateLabel} · {site.basics.location}
         </p>
         <p>
           Questions?{" "}
-          <a href={`mailto:${site.contactEmail}`} className="underline underline-offset-4">
-            {site.contactEmail}
+          <a href={`mailto:${site.basics.contactEmail}`} className="underline underline-offset-4">
+            {site.basics.contactEmail}
           </a>
         </p>
       </div>
@@ -50,8 +53,8 @@ export function SiteFooter() {
 }
 
 /** Component 8: days to go. Not a ticking clock. */
-export function Countdown({ className = "" }: { className?: string }) {
-  const days = daysUntil(site.weddingDate);
+export async function Countdown({ className = "" }: { className?: string }) {
+  const days = daysUntil(weddingDateOf(await getSiteContent()));
   const text =
     days === null
       ? "[123] days to go"
@@ -177,7 +180,7 @@ export function EventCard({
 }
 
 /** Component 4: hotel card. */
-export function HotelCard({ hotel }: { hotel: (typeof site.travel.hotels)[number] }) {
+export function HotelCard({ hotel }: { hotel: SiteContent["travel"]["hotels"][number] }) {
   return (
     <article className="overflow-hidden rounded-xl border border-mist bg-white">
       <PhotoPlaceholder label="hotel photo" className="h-40 rounded-none border-0 border-b" />
@@ -199,7 +202,7 @@ export function HotelCard({ hotel }: { hotel: (typeof site.travel.hotels)[number
 }
 
 /** Component 5: registry card. */
-export function RegistryCard({ item }: { item: (typeof site.registry.items)[number] }) {
+export function RegistryCard({ item }: { item: SiteContent["registry"]["items"][number] }) {
   return (
     <article className={`${s.card} flex flex-col gap-3`}>
       <PhotoPlaceholder label="provider logo" className="h-16" />

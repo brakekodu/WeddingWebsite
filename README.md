@@ -6,8 +6,9 @@ accounts — each printed invitation carries a QR code (and a short fallback cod
 that opens their personal RSVP page.
 
 **Status:** foundation, invitation/RSVP system, and the guest-facing site from
-the design handoff (`design/brake-wedding-handoff/`) are built. Content still has
-[bracketed placeholders] in `src/content/site.ts`. Admin redesign, wedding-week
+the design handoff (`design/brake-wedding-handoff/`) are built. Website wording is
+edited in Admin → Website text (defaults, with [bracketed placeholders], are in
+`src/content/site.ts`). Admin redesign, wedding-week
 mode, photo uploads, and bulk printing are later phases.
 
 ## Stack
@@ -108,7 +109,7 @@ src/
       dashboard/ households/ guests/ events/ invitations/ export/
   components/site/           guest-site components (header, event/hotel/registry cards, FAQ)
   components/ui/             admin UI primitives
-  content/site.ts            ALL website text — fill in the [placeholders] here
+  content/site.ts            default website text (live edits: Admin → Website text)
   lib/
     supabase/                browser, server, and privileged clients; DB types
     auth/admin.ts            admin authorization

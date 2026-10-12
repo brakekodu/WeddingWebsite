@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { EventCard, groupByDay, SectionLabel } from "@/components/site/parts";
 import { s } from "@/components/site/styles";
-import { site } from "@/content/site";
 import { formatDayHeading } from "@/lib/format";
 import { personalEvents } from "@/lib/rsvp/portal";
-import { getPublicSite, getViewer } from "@/lib/site/server";
+import { getPublicSite, getSiteContent, getViewer } from "@/lib/site/server";
 
 export const metadata = { title: "Wedding Weekend" };
 
@@ -13,6 +12,7 @@ export const metadata = { title: "Wedding Weekend" };
  * on this device, that invitation's personal schedule (including private events).
  */
 export default async function WeekendPage() {
+  const site = await getSiteContent();
   const [publicSite, viewer] = await Promise.all([getPublicSite(), getViewer()]);
   const personal = viewer ? personalEvents(viewer.view) : null;
 
@@ -20,7 +20,7 @@ export default async function WeekendPage() {
     <>
       <section className="bg-lilac px-5 py-14 text-center sm:py-20">
         <SectionLabel>
-          {site.weekendLabel} · {site.location}
+          {site.basics.weekendLabel} · {site.basics.location}
         </SectionLabel>
         <h1 className={`${s.h1} mt-3`}>{personal ? "Your wedding weekend" : "The wedding weekend"}</h1>
         {personal ? (
@@ -77,8 +77,8 @@ export default async function WeekendPage() {
         <div className={`${s.container} space-y-6`}>
           <h2 className={s.h2}>Good to know</h2>
           <dl className="grid gap-6 md:grid-cols-3">
-            {site.weekend.goodToKnow.map((item) => (
-              <div key={item.label} className={s.card}>
+            {site.weekend.goodToKnow.map((item, i) => (
+              <div key={i} className={s.card}>
                 <dt className="font-semibold">{item.label}</dt>
                 <dd className="mt-1 text-muted">{item.body}</dd>
               </div>

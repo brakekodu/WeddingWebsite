@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { site } from "@/content/site";
+import { couple } from "@/content/site";
 import { getAdmin } from "@/lib/auth/admin";
 import { fetchInvitationView } from "@/lib/invitations/server";
 import { hasCompleteResponse, invitationNames } from "@/lib/rsvp/flow";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { RsvpFlow } from "./rsvp-flow";
+import { getSiteContent } from "@/lib/site/server";
 
 export const metadata: Metadata = { title: "RSVP", robots: { index: false, follow: false } };
 
 /** The RSVP flow (screens 04–09, desktop 19). Editing re-enters at Review. */
 export default async function RsvpPage(props: PageProps<"/i/[token]/rsvp">) {
+  const site = await getSiteContent();
   const { token } = await props.params;
   const { step } = await props.searchParams;
   const view = await fetchInvitationView(await createSupabaseServerClient(), token);
@@ -25,8 +27,8 @@ export default async function RsvpPage(props: PageProps<"/i/[token]/rsvp">) {
       token={token}
       initialView={view}
       names={invitationNames(view)}
-      monogram={site.couple.monogram}
-      contactEmail={site.contactEmail}
+      monogram={couple.monogram}
+      contactEmail={site.basics.contactEmail}
       canEdit={canEdit}
       startAtReview={startAtReview}
     />

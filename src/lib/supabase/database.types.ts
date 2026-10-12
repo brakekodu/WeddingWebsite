@@ -143,6 +143,14 @@ export type SitePlacementRow = {
   crops: Json;
 } & Timestamps;
 
+export type SiteContentRow = {
+  id: boolean;
+  /** Saved sections of website wording, keyed by section (see src/lib/site/content.ts). */
+  content: Json;
+  updated_by: string | null;
+  updated_at: string;
+};
+
 export type WeddingSettingsRow = {
   id: boolean;
   /** "YYYY-MM-DD"; last day to RSVP (inclusive, venue time). */
@@ -178,6 +186,12 @@ export type Database = {
         Row: SitePlacementRow;
         Insert: InsertOf<SitePlacementRow, "slot" | "photo_ref">;
         Update: Partial<SitePlacementRow>;
+        Relationships: [];
+      };
+      site_content: {
+        Row: SiteContentRow;
+        Insert: Partial<SiteContentRow>;
+        Update: Partial<SiteContentRow>;
         Relationships: [];
       };
       wedding_settings: {
@@ -276,6 +290,8 @@ export type Database = {
       get_invitation: { Args: { p_token: string }; Returns: Json };
       get_public_site: { Args: Record<string, never>; Returns: Json };
       get_site_media: { Args: Record<string, never>; Returns: Json };
+      get_site_content: { Args: Record<string, never>; Returns: Json };
+      save_site_content_section: { Args: { p_section: string; p_value: Json | null }; Returns: undefined };
       record_rsvp_started: { Args: { p_token: string }; Returns: undefined };
       submit_rsvp: { Args: { p_token: string; p_payload: Json }; Returns: Json };
       resolve_rsvp_code: { Args: { p_code: string }; Returns: Json };

@@ -1,11 +1,12 @@
 import { RegistryCard, SectionLabel } from "@/components/site/parts";
 import { s } from "@/components/site/styles";
-import { site } from "@/content/site";
+import { getSiteContent } from "@/lib/site/server";
 
 export const metadata = { title: "Registry" };
 
 /** Registry (screen 17): external links only — no cart, no tracking. */
-export default function RegistryPage() {
+export default async function RegistryPage() {
+  const site = await getSiteContent();
   const items = site.registry.items;
   return (
     <>
@@ -18,8 +19,8 @@ export default function RegistryPage() {
         <div
           className={`mx-auto grid max-w-5xl gap-6 ${items.length >= 3 ? "md:grid-cols-3" : "max-w-2xl md:grid-cols-2"}`}
         >
-          {items.map((item) => (
-            <RegistryCard key={item.provider} item={item} />
+          {items.map((item, i) => (
+            <RegistryCard key={i} item={item} />
           ))}
         </div>
         <p className="mx-auto mt-10 max-w-2xl text-center text-sm text-muted">{site.registry.mailingNote}</p>

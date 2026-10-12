@@ -3,7 +3,7 @@ import { SlotImage } from "@/components/site/photo";
 import { s } from "@/components/site/styles";
 import { resolveSlot } from "@/lib/media/resolve";
 import { getSiteMedia } from "@/lib/media/server";
-import { site } from "@/content/site";
+import { getSiteContent } from "@/lib/site/server";
 
 export const metadata = { title: "Travel & Stay" };
 
@@ -16,6 +16,7 @@ const ANCHORS = [
 
 /** Travel & Stay (screen 16): one page with in-page anchors. */
 export default async function TravelPage() {
+  const site = await getSiteContent();
   const media = await getSiteMedia();
   const t = site.travel;
   return (
@@ -51,8 +52,8 @@ export default async function TravelPage() {
             <span aria-hidden>! </span>Room blocks close {t.roomBlockDeadline}
           </p>
           <div className="grid gap-6 md:grid-cols-3">
-            {t.hotels.map((h) => (
-              <HotelCard key={h.name} hotel={h} />
+            {t.hotels.map((h, i) => (
+              <HotelCard key={i} hotel={h} />
             ))}
             <article className="overflow-hidden rounded-xl border border-mist bg-white">
               <PhotoPlaceholder label="area photo" className="h-40 rounded-none border-0 border-b" />
@@ -70,8 +71,8 @@ export default async function TravelPage() {
         <div className={`${s.container} space-y-6`}>
           <h2 className={s.h2}>Getting there</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            {t.airports.map((a) => (
-              <div key={a.name} className={s.card}>
+            {t.airports.map((a, i) => (
+              <div key={i} className={s.card}>
                 <p className={s.label}>{a.label}</p>
                 <p className="mt-1 font-semibold">{a.name}</p>
                 <p className="text-sm text-muted">{a.note}</p>
@@ -103,8 +104,8 @@ export default async function TravelPage() {
                 </tr>
               </thead>
               <tbody>
-                {t.shuttles.map((row) => (
-                  <tr key={row.label} className="border-b border-mist">
+                {t.shuttles.map((row, i) => (
+                  <tr key={i} className="border-b border-mist">
                     <th scope="row" className="py-3 pr-4 font-semibold">
                       {row.label}
                     </th>
@@ -133,8 +134,8 @@ export default async function TravelPage() {
         <div className={`${s.container} space-y-6`}>
           <h2 className={s.h2}>Things to do</h2>
           <ul className="grid gap-6 md:grid-cols-3">
-            {t.thingsToDo.map((thing) => (
-              <li key={thing.name} className="space-y-2">
+            {t.thingsToDo.map((thing, i) => (
+              <li key={i} className="space-y-2">
                 <PhotoPlaceholder label="photo" className="aspect-[4/3]" />
                 <p className="font-semibold">{thing.name}</p>
                 <p className="text-sm text-muted">{thing.why}</p>

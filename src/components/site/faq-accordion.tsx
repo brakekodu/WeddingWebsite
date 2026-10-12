@@ -12,7 +12,7 @@ export function FaqAccordion({ items }: { items: { q: string; a: string }[] }) {
         const expanded = open === i;
         const panelId = `${baseId}-${i}`;
         return (
-          <div key={item.q} className="border-b border-mist">
+          <div key={i} className="border-b border-mist">
             <h3>
               <button
                 type="button"

@@ -3,12 +3,13 @@ import { SlotImage } from "@/components/site/photo";
 import { s } from "@/components/site/styles";
 import { resolveSlot, resolveSlotList } from "@/lib/media/resolve";
 import { getSiteMedia } from "@/lib/media/server";
-import { site } from "@/content/site";
+import { getSiteContent } from "@/lib/site/server";
 
 export const metadata = { title: "Our Story" };
 
 /** Our Story, with the Wedding Party as a section (merged, not its own nav item). */
 export default async function StoryPage() {
+  const site = await getSiteContent();
   const media = await getSiteMedia();
   const sectionPhotos = resolveSlotList(media, "story.section");
   return (
@@ -29,7 +30,7 @@ export default async function StoryPage() {
       {site.story.sections.map((section, i) => {
         const photo = sectionPhotos[i];
         return (
-          <section key={section.title} className={s.section}>
+          <section key={i} className={s.section}>
             <div className={`${s.container} grid items-center gap-8 md:grid-cols-2`}>
               {photo ? (
                 <SlotImage

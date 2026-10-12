@@ -4,10 +4,12 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { cache } from "react";
+import { siteDefaults, type SiteContent } from "@/content/site";
 import { isSupabaseConfigured } from "@/lib/env";
 import { isInvitationToken } from "@/lib/invitations/credentials";
 import { fetchInvitationView } from "@/lib/invitations/server";
 import { publicSiteSchema, type InvitationView, type PublicSite } from "@/lib/rsvp/view";
+import { resolveSiteContent } from "@/lib/site/content";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 /**
@@ -33,6 +35,23 @@ export const getPublicSite = cache(async (): Promise<PublicSite> => {
   } catch (error) {
     console.error("get_public_site failed:", error);
     return EMPTY_SITE;
+  }
+});
+
+/** Website wording: Admin → Website text over the defaults in src/content/site.ts. Never throws. */
+export const getSiteContent = cache(async (): Promise<SiteContent> => {
+  if (!isSupabaseConfigured()) return siteDefaults;
+  try {
+    const supabase = await createSupabaseServerClient();
+    const { data, error } = await supabase.rpc("get_site_content");
+    if (error) {
+      console.error("get_site_content failed:", error.message);
+      return siteDefaults;
+    }
+    return resolveSiteContent(data);
+  } catch (error) {
+    console.error("get_site_content failed:", error);
+    return siteDefaults;
   }
 });
 

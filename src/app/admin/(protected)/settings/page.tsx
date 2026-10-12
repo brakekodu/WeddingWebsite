@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ActionForm } from "@/components/ui/action-form";
 import { TextField } from "@/components/ui/fields";
 import { ui } from "@/components/ui/styles";
@@ -54,8 +55,11 @@ export default async function SettingsPage() {
         </ActionForm>
       </section>
       <p className="text-sm text-stone-500">
-        Website text (story, travel, registry links, FAQ) lives in <code>src/content/site.ts</code> for now; editing it
-        here is planned for the admin redesign.
+        Website wording (story, travel, registry links, FAQ) is edited in{" "}
+        <Link href="/admin/website" className={ui.link}>
+          Website text
+        </Link>
+        .
       </p>
     </div>
   );

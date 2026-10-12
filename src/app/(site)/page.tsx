@@ -5,12 +5,13 @@ import { SlotImage } from "@/components/site/photo";
 import { s } from "@/components/site/styles";
 import { resolveSlot, resolveSlotList } from "@/lib/media/resolve";
 import { getSiteMedia } from "@/lib/media/server";
-import { coupleNames, faqPreview, site } from "@/content/site";
+import { couple, coupleNames, faqPreview } from "@/content/site";
 import { formatDateOnly, formatDayHeading } from "@/lib/format";
-import { getPublicSite, getViewer } from "@/lib/site/server";
+import { getPublicSite, getSiteContent, getViewer } from "@/lib/site/server";
 
 /** Home: hero + previews of every page, so most visitors never need the nav (screens 10 & 14). */
 export default async function Home() {
+  const site = await getSiteContent();
   const [publicSite, viewer, media] = await Promise.all([getPublicSite(), getViewer(), getSiteMedia()]);
   const rsvpHref = viewer ? `/i/${viewer.token}` : "/rsvp";
   const deadline = formatDateOnly(publicSite.rsvp_deadline) ?? "[RSVP deadline]";
@@ -33,10 +34,10 @@ export default async function Home() {
         />
         <div className="text-white">
           <h1 className="font-serif text-5xl leading-tight drop-shadow-sm sm:text-7xl">
-            {site.couple.first} &amp; {site.couple.second}
+            {couple.first} &amp; {couple.second}
           </h1>
           <p className="mt-4 text-lg">
-            {site.dateLabel} · {site.location}
+            {site.basics.dateLabel} · {site.basics.location}
           </p>
           <Countdown className="mt-5" />
           <div className="mt-8">
@@ -122,8 +123,8 @@ export default async function Home() {
             </div>
             <div className={s.card}>
               <p className="font-semibold">Fly in</p>
-              {site.travel.airports.map((a) => (
-                <p key={a.name} className="text-sm text-muted">
+              {site.travel.airports.map((a, i) => (
+                <p key={i} className="text-sm text-muted">
                   {a.name} · {a.note}
                 </p>
               ))}
@@ -177,7 +178,7 @@ export default async function Home() {
               All questions ›
             </Link>
           </div>
-          <FaqAccordion items={faqPreview(4)} />
+          <FaqAccordion items={faqPreview(site, 4)} />
         </div>
       </section>
 

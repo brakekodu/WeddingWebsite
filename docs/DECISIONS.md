@@ -121,12 +121,20 @@ we built the default it drew; see "Open questions — defaults used" below.
 Per the handoff. 31⁶ ≈ 887M codes; with the global DB-side throttle (D15)
 brute force is still impractical. Earlier 8-character codes remain valid.
 
-### D20 — Website text lives in `src/content/site.ts` (for now)
+### D20 — Website text: defaults in code, live edits in the database
 
-Names, story, travel, registry links, and FAQ are typed content in one file —
-simple, versioned, and deployed on push. Behavior settings that must be
-enforced (RSVP deadline) live in the database. Editing site text from
-Admin → Settings is planned with the admin redesign.
+Story, travel, registry links, FAQ, and basics (date wording, location,
+contact) are typed defaults in `src/content/site.ts`. Admins edit them in
+Admin → Website text; each saved section is stored in `public.site_content`
+(one row, a JSON object keyed by section) and replaces that section's default.
+Sections never saved, or saved data that no longer validates, fall back to the
+defaults, so the site never renders blank. One field description per section
+(`src/lib/site/content.ts`) drives both the editor and validation; links must
+be `https://`, `mailto:`, or `#`. Guests read through `get_site_content()`;
+admins save one section at a time through `save_site_content_section()`, so two
+admins editing different sections never overwrite each other. The couple's
+names stay in code (titles, monogram). Settings that must be enforced (RSVP
+deadline) live in `wedding_settings`.
 
 ### D21 — "Viewing as" via an httpOnly cookie
 

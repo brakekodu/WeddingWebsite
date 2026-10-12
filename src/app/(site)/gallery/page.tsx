@@ -3,12 +3,13 @@ import { SectionLabel } from "@/components/site/parts";
 import { s } from "@/components/site/styles";
 import { resolveSlotList } from "@/lib/media/resolve";
 import { getSiteMedia } from "@/lib/media/server";
-import { site } from "@/content/site";
+import { getSiteContent } from "@/lib/site/server";
 
 export const metadata = { title: "Gallery" };
 
 /** Gallery: engagement photos now; moderated guest uploads after the wedding (later phase). */
 export default async function GalleryPage() {
+  const site = await getSiteContent();
   const media = await getSiteMedia();
   return (
     <>

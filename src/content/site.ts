@@ -1,31 +1,39 @@
 /**
  * Website content — the words and details guests read.
  *
- * Everything in [square brackets] is a placeholder still to be filled in.
+ * These are the DEFAULTS. Admins edit the live wording in Admin → Website
+ * text; any section saved there replaces the matching section below (see
+ * src/lib/site/content.ts). Everything in [square brackets] is a placeholder
+ * still to be filled in.
+ *
  * Events (times, venues, attire) are NOT here: they come from Admin → Events,
  * and only events marked Public appear on the public site. The RSVP deadline
- * comes from Admin → Settings.
+ * comes from Admin → Settings. Photos come from Admin → Photos.
  */
 
-export const site = {
-  couple: {
-    first: "Kevin",
-    second: "Sarina",
-    /** Shown top-left until the real monogram artwork exists. */
-    monogram: "K & S",
+/** The couple's names are part of the site's identity (titles, monogram), so they stay in code. */
+export const couple = {
+  first: "Kevin",
+  second: "Sarina",
+  /** Shown top-left until the real monogram artwork exists. */
+  monogram: "K & S",
+};
+
+export const coupleNames = `${couple.first} & ${couple.second}`;
+
+export const siteDefaults = {
+  basics: {
+    /** The wedding day as YYYY-MM-DD. Drives the countdown; empty hides it. */
+    weddingDate: "",
+    /** How the date reads in the hero, e.g. "Saturday, June 12, 2027". */
+    dateLabel: "[Saturday, Month Day, Year]",
+    /** Weekend span for the Weekend page header, e.g. "June 11–13, 2027". */
+    weekendLabel: "[Month Day–Day, Year]",
+    location: "[City, State]",
+    contactEmail: "[couple email]",
+    /** Day-of contact shown in the guest portal. */
+    dayOfContact: "[Coordinator name] · [phone]",
   },
-
-  /** The wedding day as YYYY-MM-DD. Drives the countdown; null hides it. */
-  weddingDate: null as string | null,
-  /** How the date reads in the hero, e.g. "Saturday, June 12, 2027". */
-  dateLabel: "[Saturday, Month Day, Year]",
-  /** Weekend span for the Weekend page header, e.g. "June 11–13, 2027". */
-  weekendLabel: "[Month Day–Day, Year]",
-  location: "[City, State]",
-
-  contactEmail: "[couple email]",
-  /** Day-of contact shown in the guest portal. */
-  dayOfContact: "[Coordinator name] · [phone]",
 
   home: {
     welcome: "[Two or three sentences welcoming guests and setting the tone for the weekend.]",
@@ -101,7 +109,6 @@ export const site = {
 
   gallery: {
     intro: "Engagement photos. After the wedding, this is where everyone's photos will live.",
-    // Photos and their order live in src/content/photos.ts.
   },
 
   registry: {
@@ -125,46 +132,49 @@ export const site = {
     mailingNote: "Sending something by mail? Please ship to [address] — not the venue.",
   },
 
-  faq: [
-    {
-      topic: "RSVP",
-      items: [
-        { q: "When is the RSVP deadline?", a: "[Answer — the deadline also appears on your invitation page.]" },
-        {
-          q: "Can we change our RSVP?",
-          a: "Yes — open your invitation link (or scan the QR code again) and choose Edit RSVP before the deadline.",
-        },
-        { q: "Lost your invitation?", a: "Email us and we'll send your link." },
-      ],
-    },
-    {
-      topic: "Attire",
-      items: [{ q: "What should I wear?", a: "[Answer text.]" }],
-    },
-    {
-      topic: "Kids & plus-ones",
-      items: [
-        { q: "Are kids invited?", a: "[Answer text.]" },
-        { q: "Can I bring a guest?", a: "[Answer text — your invitation shows whether a guest is included.]" },
-      ],
-    },
-    {
-      topic: "Travel",
-      items: [
-        { q: "Is there a hotel room block?", a: "[Answer text.]" },
-        { q: "Is there parking at the venue?", a: "[Answer text.]" },
-      ],
-    },
-    {
-      topic: "Day-of",
-      items: [{ q: "Who do we contact on the day?", a: "[Coordinator name and phone.]" }],
-    },
-  ],
+  faq: {
+    groups: [
+      {
+        topic: "RSVP",
+        items: [
+          { q: "When is the RSVP deadline?", a: "[Answer — the deadline also appears on your invitation page.]" },
+          {
+            q: "Can we change our RSVP?",
+            a: "Yes — open your invitation link (or scan the QR code again) and choose Edit RSVP before the deadline.",
+          },
+          { q: "Lost your invitation?", a: "Email us and we'll send your link." },
+        ],
+      },
+      {
+        topic: "Attire",
+        items: [{ q: "What should I wear?", a: "[Answer text.]" }],
+      },
+      {
+        topic: "Kids & plus-ones",
+        items: [
+          { q: "Are kids invited?", a: "[Answer text.]" },
+          { q: "Can I bring a guest?", a: "[Answer text — your invitation shows whether a guest is included.]" },
+        ],
+      },
+      {
+        topic: "Travel",
+        items: [
+          { q: "Is there a hotel room block?", a: "[Answer text.]" },
+          { q: "Is there parking at the venue?", a: "[Answer text.]" },
+        ],
+      },
+      {
+        topic: "Day-of",
+        items: [{ q: "Who do we contact on the day?", a: "[Coordinator name and phone.]" }],
+      },
+    ],
+  },
 };
 
-export const coupleNames = `${site.couple.first} & ${site.couple.second}`;
+export type SiteContent = typeof siteDefaults;
+export type SiteSection = keyof SiteContent;
 
 /** The first few questions, for the Home and portal previews. */
-export function faqPreview(count = 4) {
-  return site.faq.flatMap((g) => g.items).slice(0, count);
+export function faqPreview(content: SiteContent, count = 4) {
+  return content.faq.groups.flatMap((g) => g.items).slice(0, count);
 }
